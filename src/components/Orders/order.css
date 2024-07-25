@@ -1,0 +1,72 @@
+:root {
+  --color-black: #000;
+  --color-white: #fff;
+  --color-orange: #F94E30;
+  --color-light-orange: #FF6433;
+  --color-light-gray: #F2F2F2;
+  --color-light: #F4F4F4;
+  --color-whitesmoke: #F5F5F5;
+  --color-dark: #212529;
+  --color-danger: #DC3545;
+  --color-gray: #DDDDDD;
+  --font-family-manrope: 'Manrope', sans-serif;
+  --font-family-poppins: 'Poppins', sans-serif;
+  --transition-ease: all 300ms ease-in-out;
+}
+
+.main-order {
+  display: flex;
+  flex-direction: column;
+  background: rgb(255, 255, 255) !important;
+  height: 100%;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.main-order::-webkit-scrollbar {
+  display: none;
+}
+
+.main-order .order-card {
+  border: 1px solid var(--color-gray);
+  padding: 25px 15px;
+  direction: rtl;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+
+.main-order .order-card .order-card-info svg {
+  font-size: 25px;
+  color: var(--color-gray);
+}
+
+.main-order .order-card .order-card-info .order-status span {
+  font-size: 12px;
+}
+
+.main-order .order-card .order-card-info .active {
+  color: blue;
+}
+
+.main-order .order-card .order-card-info .order-back {
+  transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  -moz-transform: scaleX(-1);
+  -ms-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+}
+
+.main-order .order-card .order-product {
+  border: 1px solid var(--color-gray);
+  padding: 25px 15px;
+  direction: rtl;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}

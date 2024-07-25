@@ -1,0 +1,219 @@
+.footer {
+  position: relative;
+  flex: 0 0 auto;
+  height: 48px;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  height: 47px;
+  background-color: #000;
+  justify-content: space-between;
+}
+
+.footer-container .tab-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 5px;
+}
+
+.footer-container .tab-container.pop {
+  position: relative;
+}
+
+.footer-container .tab-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-container .tab-container .tab-icon {
+  width: 32px;
+  height: 32px;
+  color: white;
+  padding-bottom: 5px;
+}
+
+.footer-container .tab-container .tab-text {
+  position: absolute;
+  font-weight: 600;
+  font-size: 10px;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  top: 32px;
+}
+
+.cart-num {
+  position: absolute;
+  top: 0%;
+  left: 53%;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+
+.cart-num-hide {
+  display: none;
+}
+
+@media (min-width:768px) {
+  .footer {
+    position: relative;
+    flex: 0 0 auto;
+    border-left: 1px solid #ddd;
+    height: calc(100% - 60px);
+    top: 60px;
+    padding-top: 20px;
+    overflow: scroll;
+    width: 200px;
+  }
+
+  .footer::-webkit-scrollbar {
+    display: none;
+  }
+
+  .footer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    gap: 30px;
+    height: 100%;
+
+  }
+
+  .footer-container .tab-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-top: 5px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .footer-container .tab-container.pop {
+    position: relative;
+  }
+
+  .footer-container .tab-link {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+    width: 100%;
+    position: relative;
+    margin-right: 20px;
+  }
+
+  .footer-container .tab-container .tab-icon {
+    width: 32px;
+    height: 32px;
+    color: black;
+    padding-bottom: 5px;
+    margin-left: 6px;
+  }
+
+  .footer-container .tab-container .tab-text {
+    font-weight: 600;
+    font-size: 20px;
+    color: black;
+    text-align: center;
+    position: relative;
+    top: auto;
+  }
+
+  .cart-num {
+    position: absolute;
+    top: -15%;
+    right: 0;
+    left: 90%;
+    width: 15px;
+    height: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+  }
+
+  .cart-num-hide {
+    display: none;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    margin-right: 20px;
+    overflow: scroll;
+  }
+
+  .footer-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .footer-links .terms {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+    width: 100%;
+    margin-bottom: 7px;
+  }
+
+  .footer-links .terms .cur {
+    cursor: pointer;
+  }
+
+  .footer-links .terms span {
+    cursor: pointer;
+    margin-bottom: 5px;
+  }
+
+  .footer-links .terms .footer-links-item {
+    color: black;
+    text-align: end;
+  }
+
+  .footer-links .hide-menu {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+  }
+
+  .footer-links .show-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (max-width:767px) {
+  .footer-links {
+    display: none;
+  }
+}

@@ -1,0 +1,117 @@
+.comment-section {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  /* background: #f9f9f9; */
+  border-radius: 8px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  direction: rtl;
+}
+
+.comment-section h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.comment-input,
+.reply-input,
+.edit-input {
+  width: calc(100% - 100px);
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+}
+
+.comment-button,
+.reply-button,
+.edit-button,
+.delete-button {
+  padding: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.comment-button:hover,
+.reply-button:hover,
+.edit-button:hover,
+.delete-button:hover {
+  background: #0056b3;
+}
+
+.comment-list {
+  list-style: none;
+  padding: 0;
+  padding-bottom: 20px;
+}
+
+.comment-item {
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 4px;
+  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); */
+}
+
+.comment-item .comment-text {
+  margin-bottom: 10px;
+  font-size: 16px;
+  padding-right: 30px;
+}
+
+.comment-item .comment-date {
+  font-size: 12px;
+  color: #999;
+  margin-right: 10px;
+}
+
+.comment-item .comment-actions span {
+  background: transparent;
+  cursor: pointer;
+  border: none;
+}
+
+.comment-form {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10000;
+  background-color: white;
+  width: 100%;
+  padding: 5px 5px;
+  display: flex;
+}
+
+.comment-form input {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end;
+  background-color: rgba(22, 24, 35, 0.06);
+  box-sizing: border-box;
+  border: medium;
+  border-radius: 8px;
+  padding: 0px 9px;
+  flex-basis: 80%;
+  outline: none;
+  caret-color: var(--color-orange);
+}
+
+.comment-form button {
+  border: medium;
+  border-radius: 8px;
+  margin-left: 5px;
+  background-color: var(--color-light-orange);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-basis: 19%;
+}

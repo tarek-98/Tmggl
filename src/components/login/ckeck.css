@@ -1,0 +1,54 @@
+:root {
+  --color-black: #000;
+  --color-white: #fff;
+  --color-orange: #F94E30;
+  --color-light-orange: #FF6433;
+  --color-light-gray: #F2F2F2;
+  --color-light: #F4F4F4;
+  --color-whitesmoke: #F5F5F5;
+  --color-dark: #212529;
+  --color-danger: #DC3545;
+  --color-gray: #929292;
+  --font-family-manrope: 'Manrope', sans-serif;
+  --font-family-poppins: 'Poppins', sans-serif;
+  --transition-ease: all 300ms ease-in-out;
+}
+
+.check-main {
+  display: flex;
+  flex-direction: column;
+  background: rgb(255, 255, 255) !important;
+  height: 100%;
+  padding: 10px;
+  overflow-y: scroll;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.check-main .icon svg {
+  color: #31C658;
+  font-size: 50px;
+}
+
+.check-main .text {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.check-main .text span {
+  font-size: 25px;
+  text-align: center;
+}
+
+.check-main .phone {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+}
+
+.check-main .phone span {
+  font-size: 20px;
+}

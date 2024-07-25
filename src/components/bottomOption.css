@@ -1,0 +1,157 @@
+:root {
+  --color-black: #000;
+  --color-white: #fff;
+  --color-orange: #F94E30;
+  --color-light-orange: #FF6433;
+  --color-light-gray: #F2F2F2;
+  --color-light: #F4F4F4;
+  --color-whitesmoke: #F5F5F5;
+  --color-dark: #212529;
+  --color-danger: #DC3545;
+  --color-gray: #929292;
+  --transition-ease: all 300ms ease-in-out;
+}
+
+.bottomOption {
+  width: 80%;
+  height: 90px;
+  background-color: #C5C8C4;
+  opacity: 0.8;
+  border-radius: 30px;
+  position: absolute;
+  bottom: 30px;
+  left: 0px;
+  z-index: 10;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+}
+
+@media (max-width:425px) {
+  .bottomOption {
+    width: 90% !important;
+  }
+}
+
+.bottomOption .add-cart {
+  background-color: var(--color-light-orange);
+  border-radius: 30px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  color: white;
+  font-weight: bold;
+  padding: 15px 20px;
+  text-align: center;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+
+.bottomOption .old-price {
+  color: var(--color-danger);
+  text-decoration: line-through;
+  color: red;
+  font-weight: bold;
+  font-size: 20px;
+  margin-right: 5px;
+  direction: rtl;
+  position: relative;
+}
+
+.bottomOption .old-price .dis-v {
+  position: absolute;
+  top: -75px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #C5C8C4;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  opacity: 1;
+}
+
+.bottomOption .old-price-hide {
+  display: none;
+}
+
+.bottomOption .price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 5px;
+}
+
+.bottomOption .price .new-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  direction: rtl;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bottomOption .price .new-price svg {
+  color: #AC3D00;
+}
+
+.bottomOption .price .new-price .free-shipping-text {
+  font-size: 9px;
+  color: #AC3D00;
+}
+
+/**/
+/* VideoSwiper.css */
+
+
+.edit-modal {
+  background-color: white !important;
+}
+
+.css-79ws1d-MuiModal-root {
+  position: fixed;
+  z-index: 1300;
+  right: 0;
+  bottom: 0;
+  top: 139px;
+  left: 0;
+  height: 85%;
+}
+
+@media (min-width:768px) {
+  .edit-modal {
+    background-color: white !important;
+  }
+
+  .css-79ws1d-MuiModal-root {
+    position: fixed;
+    z-index: 1300;
+    right: 0;
+    bottom: 0;
+    top: 139px;
+    left: -100px;
+    height: 85%;
+  }
+}

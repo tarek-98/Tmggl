@@ -1,0 +1,47 @@
+.head-pc {
+  height: 60px;
+  display: flex;
+  padding: 20px 0;
+  border-right: 1px solid #ddd;
+  position: fixed;
+  left: 0;
+  top: 0px;
+  z-index: 1000;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 1px;
+  background: rgb(255, 255, 255);
+  align-items: center;
+}
+
+.head-pc .head-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 20px;
+
+}
+
+.head-pc .head-content .logo img {
+  width: 200px;
+  height: 42px;
+}
+
+.head-pc .option {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.head-pc .option img {
+  width: 50px;
+  height: 50px;
+}
+
+@media (max-width:767px) {
+  .head-pc {
+    display: none;
+  }
+}

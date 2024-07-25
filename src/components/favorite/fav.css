@@ -1,0 +1,40 @@
+:root {
+  --color-black: #000;
+  --color-white: #fff;
+  --color-orange: #F94E30;
+  --color-light-orange: #FF6433;
+  --color-light-gray: #F2F2F2;
+  --color-light: #F4F4F4;
+  --color-whitesmoke: #F5F5F5;
+  --color-dark: #212529;
+  --color-danger: #DC3545;
+  --color-gray: #929292;
+  --transition-ease: all 300ms ease-in-out;
+}
+
+.main-fav {
+  display: flex;
+  flex-direction: column;
+  background: rgb(255, 255, 255) !important;
+  height: 100%;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.main-fav::-webkit-scrollbar {
+  display: none;
+}
+
+.vendor-products-item video {
+  object-fit: cover;
+  width: 100%;
+}
+
+.main-fav .del-fav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-danger);
+  cursor: pointer;
+  color: white;
+}

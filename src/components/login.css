@@ -1,0 +1,6 @@
+.log-home {
+  display: flex;
+  flex-direction: column;
+  background: rgb(255, 255, 255) !important;
+  height: 100%;
+}

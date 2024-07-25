@@ -1,0 +1,8 @@
+.gift-page {
+  display: flex;
+  flex-direction: column;
+  background: rgb(255, 255, 255) !important;
+  height: 100%;
+  direction: rtl;
+  padding: 10px;
+}

@@ -1,0 +1,107 @@
+:root {
+  --color-black: #000;
+  --color-white: #fff;
+  --color-orange: #F94E30;
+  --color-light-orange: #FF6433;
+  --color-light-gray: #F2F2F2;
+  --color-light: #F4F4F4;
+  --color-whitesmoke: #F5F5F5;
+  --color-dark: #212529;
+  --color-danger: #DC3545;
+  --color-gray: #929292;
+  --transition-ease: all 300ms ease-in-out;
+}
+
+.video-card {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width:768px) {
+  .video-card {
+    width: 460px;
+    height: 100%;
+    box-sizing: border-box;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.swiper {
+  height: 100% !important;
+  z-index: 4 !important;
+}
+
+.video-slide-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.plyer-container {
+  position: relative;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  color: rgb(255, 255, 255);
+  overflow: hidden;
+}
+
+.plyer-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: unset;
+  z-index: 3;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.btn-control {
+  position: relative;
+  z-index: 1000;
+  top: 88%;
+  left: 20px;
+}
+
+@media (min-width:767px) {
+  .plyer-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    color: rgb(255, 255, 255);
+    overflow: hidden;
+  }
+
+
+  .plyer-container video {
+    height: 100%;
+    width: 100%;
+    z-index: 3;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+}
+
+/*timeLine*/
+.timeline {
+  width: 100%;
+  height: 6px;
+  background-color: #e0e0e0;
+  position: absolute;
+  cursor: pointer;
+  margin-top: 7px;
+  z-index: 3;
+  bottom: 0;
+}
+
+.timeline-progress {
+  height: 100%;
+  background-color: #3b82f6;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
