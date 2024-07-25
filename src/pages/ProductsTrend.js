@@ -144,10 +144,10 @@ function ProductsTrend() {
             >
               <IoIosCloseCircleOutline />
               <h2 className="text-comment fs-4">
-                {comments.length > 0 ? "Comments" : "No Comments"}{" "}
                 {comments.length > 0 && (
-                  <span className="fs-5">{comments.length}</span>
+                  <span className="fs-4 me-2">{comments.length}</span>
                 )}
+                {comments.length > 0 ? "Comments" : "No Comments"}
               </h2>
             </div>
             <Comments product={product} />

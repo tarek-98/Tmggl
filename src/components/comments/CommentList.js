@@ -36,10 +36,10 @@ const Comments = ({ product }) => {
         <div className="d-flex align-items-center gap-2">
           <FaUser className="fs-4" />
           <span className="text-black-50">
-            {product.idVendor === comment.client && (
+            userName
+            {user === comment.client && (
               <span className="text-danger me-2">التاجر</span>
             )}
-            userName
           </span>
         </div>
         <div className="comment-text mb-0">{comment.comment}</div>

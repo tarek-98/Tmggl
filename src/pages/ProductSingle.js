@@ -111,7 +111,6 @@ function ProductSingle() {
     dispatch(fetchFavoriteProduct(UserId));
   }, []);
 
-  
   // Grouping by namechoose
   const groupedChooses =
     product &&
@@ -179,10 +178,10 @@ function ProductSingle() {
             >
               <IoIosCloseCircleOutline />
               <h2 className="text-comment fs-4">
-                {comments.length > 0 ? "Comments" : "No Comments"}{" "}
                 {comments.length > 0 && (
-                  <span className="fs-5">{comments.length}</span>
+                  <span className="fs-4 me-2">{comments.length}</span>
                 )}
+                {comments.length > 0 ? "Comments" : "No Comments"}
               </h2>
             </div>
             <Comments product={product} />
@@ -276,34 +275,34 @@ function ProductSingle() {
                       </div>
                     </div>
                     <div className="qty align-center m-1 mb-2">
-                    <div className="qty-text mb-2 ms-2">الكمية :</div>
-                    <div className="qty-change d-flex">
-                      <button
-                        type="button"
-                        className="qty-decrease d-flex justify-content-center"
-                        onClick={() => decreaseQty()}
-                      >
-                        -
-                      </button>
-                      <div className="qty-value d-flex justify-content-center">
-                        {quantity}
+                      <div className="qty-text mb-2 ms-2">الكمية :</div>
+                      <div className="qty-change d-flex">
+                        <button
+                          type="button"
+                          className="qty-decrease d-flex justify-content-center"
+                          onClick={() => decreaseQty()}
+                        >
+                          -
+                        </button>
+                        <div className="qty-value d-flex justify-content-center">
+                          {quantity}
+                        </div>
+                        <button
+                          type="button"
+                          className="qty-increase d-flex justify-content-center"
+                          onClick={() => increaseQty()}
+                        >
+                          +
+                        </button>
                       </div>
-                      <button
-                        type="button"
-                        className="qty-increase d-flex justify-content-center"
-                        onClick={() => increaseQty()}
-                      >
-                        +
-                      </button>
+                      {product.current_stock === 0 ? (
+                        <div className="qty-error text-uppercase bg-danger text-white">
+                          out of stock
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </div>
-                    {product.current_stock === 0 ? (
-                      <div className="qty-error text-uppercase bg-danger text-white">
-                        out of stock
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </div>
                     <div className="size-opt d-flex flex-column">
                       {Object.entries(groupedChooses).map(
                         ([namechoose, items]) => (
