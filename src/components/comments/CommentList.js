@@ -37,7 +37,7 @@ const Comments = ({ product }) => {
           <FaUser className="fs-4" />
           <span className="text-black-50">
             userName
-            {user === comment.client && (
+            {product.idVendor === comment.client && (
               <span className="text-danger me-2">التاجر</span>
             )}
           </span>
