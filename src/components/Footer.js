@@ -25,18 +25,19 @@ function Footer() {
     <div className="footer">
       <div>
         <footer className="footer-container">
-          <div className="tab-container" onClick={() => setToggle(0)}>
-            <Link to="/" className="tab-link">
+          <div className="tab-container">
+            <Link to="/" className="tab-link" onClick={() => setToggle(0)}>
               <FaHome className="tab-icon" />
               <div className={toggle === 0 ? "tab-text active" : "tab-text"}>
                 الرئيسية
               </div>
             </Link>
           </div>
-          <div className="tab-container pop" onClick={() => setToggle(1)}>
+          <div className="tab-container pop">
             <Link
               to={isAuthenticated ? "/inbox" : "/login"}
               className="tab-link"
+              onClick={() => setToggle(1)}
             >
               <MdOutlineMoveToInbox className="tab-icon" />
               <span
@@ -50,10 +51,11 @@ function Footer() {
               </div>
             </Link>
           </div>
-          <div className="tab-container pop" onClick={() => setToggle(2)}>
+          <div className="tab-container pop">
             <Link
               to={isAuthenticated ? "/cart" : "/login"}
               className="tab-link"
+              onClick={() => setToggle(2)}
             >
               <FaCartArrowDown className="tab-icon" />
               <span
@@ -66,10 +68,11 @@ function Footer() {
               </div>
             </Link>
           </div>
-          <div className="tab-container" onClick={() => setToggle(3)}>
+          <div className="tab-container">
             <Link
               to={isAuthenticated ? "/profile" : "/login"}
               className="tab-link"
+              onClick={() => setToggle(3)}
             >
               <FaRegUserCircle className="tab-icon" />
               {isAuthenticated ? (

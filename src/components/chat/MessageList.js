@@ -6,10 +6,9 @@ import {
   addMessage,
 } from "../../store/chatSlice";
 import "./inbox.css";
-import io from "socket.io-client";
 import MessageItem from "./MessageItem";
-
-const socket = io("https://tager.onrender.com");
+import { socket } from "../../services/socket";
+import { format } from "date-fns";
 
 const MessageList = ({ senderId, receiverId }) => {
   const dispatch = useDispatch();
@@ -20,6 +19,7 @@ const MessageList = ({ senderId, receiverId }) => {
   useEffect(() => {
     dispatch(fetchMessagesAsync({ senderId, receiverId }));
 
+    socket.connect();
     socket.emit("join", receiverId);
 
     socket.on("newMessage", (message) => {
@@ -28,6 +28,7 @@ const MessageList = ({ senderId, receiverId }) => {
 
     return () => {
       socket.off("newMessage");
+      socket.disconnect();
     };
   }, [dispatch, senderId, receiverId]);
 
@@ -49,16 +50,42 @@ const MessageList = ({ senderId, receiverId }) => {
   }, [messages, isAtBottom]);
 
   useEffect(() => {
-    // setInterval(() => {
-    //   dispatch(fetchMessagesAsync({ senderId, receiverId }));
-    // }, 1000);
+    setInterval(() => {
+      dispatch(fetchMessagesAsync({ senderId, receiverId }));
+    }, 1000);
   }, []);
+
+  // Function to group messages by date
+  const groupMessagesByDate = (messages) => {
+    return messages.reduce((groups, message) => {
+      const date = format(new Date(message.createdAt), "yyyy-MM-dd");
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(message);
+      return groups;
+    }, {});
+  };
+
+  const groupedMessages = groupMessagesByDate(messages);
 
   return (
     <div className="message-list" ref={messageListRef} onScroll={handleScroll}>
-      {messages.map((message) => (
-        <MessageItem key={message._id} message={message} senderId={senderId} />
-      ))}
+      {messages &&
+        Object.keys(groupedMessages).map((date) => (
+          <React.Fragment key={date}>
+            <div className="message-date text-center">
+              {format(new Date(date), "eeee, MMMM d, yyyy")}
+            </div>
+            {groupedMessages[date].map((message) => (
+              <MessageItem
+                key={message.id}
+                message={message}
+                senderId={senderId}
+              />
+            ))}
+          </React.Fragment>
+        ))}
     </div>
   );
 };

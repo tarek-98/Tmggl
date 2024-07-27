@@ -144,3 +144,33 @@
   background-color: #007bff;
   color: #fff;
 }
+
+.message-time {
+  display: block;
+  font-size: 0.7em;
+  color: #999;
+  margin-top: 1px;
+  margin-right: auto;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.message-date {
+  text-align: center;
+  font-size: 12px;
+  margin: 10px 0;
+  font-weight: bold;
+  color: #666;
+}
+
+.received .message-time {
+  display: block;
+  font-size: 0.7em;
+  color: #999;
+  margin-top: 1px;
+  margin-right: auto;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
