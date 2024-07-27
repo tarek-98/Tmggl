@@ -36,6 +36,7 @@ function NewestProduct({
     dispatch(fetchAsyncNewestProducts());
   }, []);
 
+  const [autoPlay, setAutoPlay] = useState(false);
   const handleSlideChange = (swiper) => {
     const activeSlideIndex = swiper.activeIndex;
     const activeProduct = products[activeSlideIndex];
@@ -47,6 +48,7 @@ function NewestProduct({
     }
     dispatch(fetchAsyncProductSingle(activeProduct._id));
     dispatch(shareProduct(activeProduct._id));
+    setAutoPlay(true);
   };
 
   const togglePlay = (index) => {
@@ -121,7 +123,7 @@ function NewestProduct({
                             id={index}
                             src={vid2}
                             className="react-player"
-                            autoPlay={true}
+                            autoPlay={index === 0 ? true : autoPlay}
                             muted={sound}
                             loop
                             playsInline={true}

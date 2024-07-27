@@ -38,6 +38,7 @@ function TrendProducts({
     console.log(products);
   }, []);
 
+  const [autoPlay, setAutoPlay] = useState(false);
   const handleSlideChange = (swiper) => {
     const activeSlideIndex = swiper.activeIndex;
     const activeProduct = products[activeSlideIndex];
@@ -49,6 +50,7 @@ function TrendProducts({
     }
     dispatch(fetchAsyncProductSingle(activeProduct._id));
     dispatch(shareProduct(activeProduct._id));
+    setAutoPlay(true);
   };
 
   const togglePlay = (index) => {
@@ -124,7 +126,7 @@ function TrendProducts({
                               id={index}
                               src={vid2}
                               className="react-player"
-                              autoPlay={true}
+                              autoPlay={index === 0 ? true : autoPlay}
                               muted={sound}
                               loop
                               playsInline={true}
