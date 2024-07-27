@@ -266,13 +266,13 @@
   width: 220px;
   background-color: #C5C8C4;
   opacity: 0.8;
-  bottom: 25px;
+  bottom: 10px;
   left: 55px;
-  border-radius: 50px;
-  -webkit-border-radius: 50px;
-  -moz-border-radius: 50px;
-  -ms-border-radius: 50px;
-  -o-border-radius: 50px;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -315,6 +315,7 @@
   inset: 0px;
   width: 100%;
   height: 100%;
+  direction: rtl;
 }
 
 .info-home::-webkit-scrollbar {
