@@ -99,11 +99,12 @@ function SlideOverlay({
       setIsFavoriteIcon(true);
       dispatch(addToFavorite({ productId, UserId }));
       dispatch(fetchFavoriteProduct(UserId));
-    } else if (isAuthenticated === false) {
-      toast.info("يجب عليك تسجيل الدخول اولا", {
-        position: "top-left",
-      });
     }
+    // else if (isAuthenticated === false) {
+    //   toast.info("يجب عليك تسجيل الدخول اولا", {
+    //     position: "top-left",
+    //   });
+    // }
     console.log({ productId, UserId });
   }
 
