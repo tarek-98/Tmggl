@@ -19,17 +19,21 @@ function Footer() {
   const [terms, setTerms] = useState(false);
   const [info, setInfo] = useState(false);
 
+  const [toggle, setToggle] = useState(0);
+
   return (
     <div className="footer">
       <div>
         <footer className="footer-container">
-          <div className="tab-container">
+          <div className="tab-container" onClick={() => setToggle(0)}>
             <Link to="/" className="tab-link">
               <FaHome className="tab-icon" />
-              <div className="tab-text">الرئيسية</div>
+              <div className={toggle === 0 ? "tab-text active" : "tab-text"}>
+                الرئيسية
+              </div>
             </Link>
           </div>
-          <div className="tab-container pop">
+          <div className="tab-container pop" onClick={() => setToggle(1)}>
             <Link
               to={isAuthenticated ? "/inbox" : "/login"}
               className="tab-link"
@@ -40,10 +44,13 @@ function Footer() {
               >
                 {carts.length}
               </span>
-              <div className="tab-text"> الوارد</div>
+              <div className={toggle === 1 ? "tab-text active" : "tab-text"}>
+                {" "}
+                الوارد
+              </div>
             </Link>
           </div>
-          <div className="tab-container pop">
+          <div className="tab-container pop" onClick={() => setToggle(2)}>
             <Link
               to={isAuthenticated ? "/cart" : "/login"}
               className="tab-link"
@@ -54,19 +61,25 @@ function Footer() {
               >
                 {carts.length}
               </span>
-              <div className="tab-text">السلة</div>
+              <div className={toggle === 2 ? "tab-text active" : "tab-text"}>
+                السلة
+              </div>
             </Link>
           </div>
-          <div className="tab-container">
+          <div className="tab-container" onClick={() => setToggle(3)}>
             <Link
               to={isAuthenticated ? "/profile" : "/login"}
               className="tab-link"
             >
               <FaRegUserCircle className="tab-icon" />
               {isAuthenticated ? (
-                <div className="tab-text">حسابي</div>
+                <div className={toggle === 3 ? "tab-text active" : "tab-text"}>
+                  حسابي
+                </div>
               ) : (
-                <div className="tab-text">تسجيل الدخول</div>
+                <div className={toggle === 3 ? "tab-text active" : "tab-text"}>
+                  تسجيل الدخول
+                </div>
               )}
             </Link>
           </div>

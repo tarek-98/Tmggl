@@ -45,6 +45,10 @@
   top: 32px;
 }
 
+.footer-container .tab-container .tab-text.active {
+  color: red;
+}
+
 .cart-num {
   position: absolute;
   top: 0%;
