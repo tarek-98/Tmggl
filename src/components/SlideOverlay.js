@@ -29,6 +29,7 @@ import {
   getSharedProduct,
   shareProduct,
 } from "../store/productSlice";
+import { toast, ToastContainer } from "react-toastify";
 
 function SlideOverlay({
   product,
@@ -88,6 +89,7 @@ function SlideOverlay({
     }
   };
   const [isFavoriteIcon, setIsFavoriteIcon] = useState(false);
+
   function handleAddFavorite() {
     if (isFavorite && isAuthenticated) {
       setIsFavoriteIcon(false);
@@ -97,6 +99,10 @@ function SlideOverlay({
       setIsFavoriteIcon(true);
       dispatch(addToFavorite({ productId, UserId }));
       dispatch(fetchFavoriteProduct(UserId));
+    } else if (isAuthenticated === false) {
+      toast.info("يجب عليك تسجيل الدخول اولا", {
+        position: "top-left",
+      });
     }
     console.log({ productId, UserId });
   }
@@ -197,7 +203,7 @@ function SlideOverlay({
               <Link to={isAuthenticated ? "/inbox/chat" : ""}>
                 <div className="item">
                   <RiChatForwardLine />
-                  <span>Chat</span>
+                  <span>مراسلة التاجر</span>
                 </div>
               </Link>
             </div>
@@ -211,7 +217,7 @@ function SlideOverlay({
                 }}
               >
                 <HiMiniBars3 />
-                <span>Info</span>
+                <span>معلومات</span>
               </div>
             </div>
             <div className="smart-wrapper">
@@ -223,7 +229,7 @@ function SlideOverlay({
                 }}
               >
                 <FaShare />
-                <span>share</span>
+                <span>مشاركة</span>
               </div>
               <div className={social ? "social-home" : "social-home-hide"}>
                 <div className="social-conatact-call" onClick={handleShare}>
@@ -250,6 +256,7 @@ function SlideOverlay({
               </div>
             </div>
           </div>
+          <ToastContainer />
         </div>
       </div>
     </div>

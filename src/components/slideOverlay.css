@@ -122,8 +122,8 @@
 }
 
 .left-side-content .item svg {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   color: white;
 }
 
@@ -133,6 +133,7 @@
 
 .left-side-content .item span {
   color: white;
+  font-size: 10px;
   font-weight: bold;
 }
 

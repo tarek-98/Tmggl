@@ -49,9 +49,9 @@ const MessageList = ({ senderId, receiverId }) => {
   }, [messages, isAtBottom]);
 
   useEffect(() => {
-    setInterval(() => {
-      dispatch(fetchMessagesAsync({ senderId, receiverId }));
-    }, 1000);
+    // setInterval(() => {
+    //   dispatch(fetchMessagesAsync({ senderId, receiverId }));
+    // }, 1000);
   }, []);
 
   return (

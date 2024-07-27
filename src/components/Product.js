@@ -58,6 +58,8 @@ function Product({
     }
   };
 
+  const [autoPlay, setAutoPlay] = useState(false);
+
   const handleSlideChange = (swiper) => {
     const activeSlideIndex = swiper.activeIndex;
     const activeProduct = products[activeSlideIndex];
@@ -69,6 +71,7 @@ function Product({
     }
     dispatch(fetchAsyncProductSingle(activeProduct._id));
     dispatch(shareProduct(activeProduct._id));
+    setAutoPlay(true);
   };
 
   return (
@@ -126,7 +129,7 @@ function Product({
                             src={vid2}
                             // src={product.video}
                             className="react-player"
-                            autoPlay={true}
+                            autoPlay={index === 0 ? true : autoPlay}
                             muted={sound}
                             loop
                             playsInline={true}

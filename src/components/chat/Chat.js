@@ -15,8 +15,8 @@ const Chat = () => {
   const userData = userInfo[`Client data`][0];
   const senderId = userData ? userData._id : null;
 
-  // const receiverId = localStorage.getItem("receiverId");
-  const receiverId = `667c680074002d1fded8bc9f`;
+  const receiverId = localStorage.getItem("receiverId");
+  // const receiverId = `667c680074002d1fded8bc9f`;
 
   useEffect(() => {
     Swal.fire({

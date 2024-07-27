@@ -23,6 +23,7 @@ export const fetchVendors = createAsyncThunk(
     return data;
   }
 );
+
 export const fetchFollowers = createAsyncThunk(
   "vendors/fetchFollowers",
   async (userId) => {
