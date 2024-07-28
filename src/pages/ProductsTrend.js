@@ -22,7 +22,8 @@ function ProductsTrend() {
   const [comment, setComment] = useState(false);
   const [info, setInfo] = useState(false);
   const [addProduct, setAddProduct] = useState(false);
-  const products = useSelector(getAllTrendProducts);
+  const data = useSelector(getAllTrendProducts);
+  const products = data && data.products;
   const productData = useSelector(getProductSingle);
   const product = productData.product;
   const comments = product ? product.comments : null;
@@ -111,6 +112,14 @@ function ProductsTrend() {
       return acc;
     }, {});
 
+  function alertLogin() {
+    Swal.fire({
+      title: "تسجيل الدخول اولا",
+      icon: "info",
+      confirmButtonText: "فهمت",
+    });
+  }
+
   return (
     <Fragment>
       <Navbar />
@@ -123,7 +132,8 @@ function ProductsTrend() {
         addProduct={addProduct}
         setAddProduct={setAddProduct}
         setComment={setComment}
-        products={products.products}
+        products={products}
+        alertLogin={alertLogin}
       />
 
       {product && (
@@ -142,7 +152,7 @@ function ProductsTrend() {
                 {comments.length > 0 ? "Comments" : "No Comments"}
               </h2>
             </div>
-            <Comments product={product} />
+            <Comments product={product} alertLogin={alertLogin} />
           </div>
         </div>
       )}

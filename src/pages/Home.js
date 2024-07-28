@@ -109,6 +109,14 @@ function Home() {
       return acc;
     }, {});
 
+  function alertLogin() {
+    Swal.fire({
+      title: "تسجيل الدخول اولا",
+      icon: "info",
+      confirmButtonText: "فهمت",
+    });
+  }
+
   return (
     <Fragment>
       <Navbar />
@@ -122,6 +130,7 @@ function Home() {
         setAddProduct={setAddProduct}
         setComment={setComment}
         products={products}
+        alertLogin={alertLogin}
       />
 
       {product && (
@@ -139,7 +148,7 @@ function Home() {
                 {comments.length > 0 ? "Comments" : "No Comments"}
               </h2>
             </div>
-            <Comments product={product} />
+            <Comments product={product} alertLogin={alertLogin} />
           </div>
         </div>
       )}

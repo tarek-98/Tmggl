@@ -29,6 +29,7 @@ function NewestProduct({
   setInfo,
   addProduct,
   setAddProduct,
+  alertLogin,
 }) {
   const [social, setSocial] = useState(false);
   const dispatch = useDispatch();
@@ -101,7 +102,7 @@ function NewestProduct({
       video.currentTime = newTime;
 
       setVideoState((prevState) => {
-        const newState = [...prevState];
+        const newState = prevState && [...prevState];
         newState[index] = {
           ...newState[index],
           percentage: newPercentage,
@@ -188,7 +189,7 @@ function NewestProduct({
                             onLoadedData={(e) => {
                               const duration = e.target.duration;
                               setVideoState((prevState) => {
-                                const newState = [...prevState];
+                                const newState = prevState && [...prevState];
                                 if (newState[index]) {
                                   newState[index].duration = duration;
                                 }
@@ -217,18 +218,18 @@ function NewestProduct({
                               currentTime={currentTime}
                             />
                             <div className="sound-icon ms-1">
-                            {sound ? (
-                              <CiVolumeMute
-                                className="fs-4"
-                                onClick={() => setSound(false)}
-                              />
-                            ) : (
-                              <AiOutlineSound
-                                className="fs-4"
-                                onClick={() => setSound(true)}
-                              />
-                            )}
-                          </div>
+                              {sound ? (
+                                <CiVolumeMute
+                                  className="fs-4"
+                                  onClick={() => setSound(false)}
+                                />
+                              ) : (
+                                <AiOutlineSound
+                                  className="fs-4"
+                                  onClick={() => setSound(true)}
+                                />
+                              )}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -241,6 +242,7 @@ function NewestProduct({
                       setSocial={setSocial}
                       info={info}
                       setInfo={setInfo}
+                      alertLogin={alertLogin}
                     />
                     <BottomOption
                       product={product}

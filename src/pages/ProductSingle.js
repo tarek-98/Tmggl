@@ -155,6 +155,14 @@ function ProductSingle() {
   };
   /* */
 
+  function alertLogin() {
+    Swal.fire({
+      title: "تسجيل الدخول اولا",
+      icon: "info",
+      confirmButtonText: "فهمت",
+    });
+  }
+
   return (
     <div className="single-product video-card">
       <div className="video-slide-container">
@@ -205,6 +213,7 @@ function ProductSingle() {
           setSocial={setSocial}
           info={info}
           setInfo={setInfo}
+          alertLogin={alertLogin}
         />
         <BottomOption
           product={product}
@@ -230,7 +239,7 @@ function ProductSingle() {
                 {comments.length > 0 ? "Comments" : "No Comments"}
               </h2>
             </div>
-            <Comments product={product} />
+            <Comments product={product} alertLogin={alertLogin} />
           </div>
         </div>
       )}

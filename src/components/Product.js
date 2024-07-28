@@ -29,6 +29,7 @@ function Product({
   setInfo,
   addProduct,
   setAddProduct,
+  alertLogin,
 }) {
   const productsStatus = useSelector(getAllProductsStatus);
   const [social, setSocial] = useState(false);
@@ -245,6 +246,7 @@ function Product({
                       setSocial={setSocial}
                       info={info}
                       setInfo={setInfo}
+                      alertLogin={alertLogin}
                     />
                     <BottomOption
                       product={product}

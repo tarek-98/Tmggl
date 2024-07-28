@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addComment } from "../../store/commentSlice";
 
-const AddComment = ({ product }) => {
+const AddComment = ({ product, alertLogin }) => {
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
   const { userInfo, isAuthenticated } = useSelector((state) => state.auth);
@@ -13,11 +13,19 @@ const AddComment = ({ product }) => {
   const onContentChanged = (e) => setComment(e.target.value);
 
   const onSaveCommentClicked = () => {
-    if (comment) {
+    if (comment && isAuthenticated) {
       dispatch(addComment({ productId, client, comment }));
       setComment("");
+    } else {
+      checkLogin();
     }
   };
+
+  function checkLogin() {
+    if (!isAuthenticated) {
+      alertLogin();
+    }
+  }
 
   return (
     <Fragment>
@@ -30,7 +38,7 @@ const AddComment = ({ product }) => {
         type="button"
         onClick={onSaveCommentClicked}
         className="comment-button"
-        disabled={!isAuthenticated || comment === ""}
+        // disabled={!isAuthenticated || comment === ""}
       >
         اضف
       </button>

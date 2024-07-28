@@ -30,6 +30,7 @@ function TrendProducts({
   setInfo,
   addProduct,
   setAddProduct,
+  alertLogin,
 }) {
   const [social, setSocial] = useState(false);
   const dispatch = useDispatch();
@@ -103,7 +104,7 @@ function TrendProducts({
       video.currentTime = newTime;
 
       setVideoState((prevState) => {
-        const newState = [...prevState];
+        const newState = [prevState];
         newState[index] = {
           ...newState[index],
           percentage: newPercentage,
@@ -191,7 +192,7 @@ function TrendProducts({
                               onLoadedData={(e) => {
                                 const duration = e.target.duration;
                                 setVideoState((prevState) => {
-                                  const newState = [...prevState];
+                                  const newState = [prevState];
                                   if (newState[index]) {
                                     newState[index].duration = duration;
                                   }
@@ -244,6 +245,7 @@ function TrendProducts({
                         setSocial={setSocial}
                         info={info}
                         setInfo={setInfo}
+                        alertLogin={alertLogin}
                       />
                       <BottomOption
                         product={product}

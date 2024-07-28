@@ -39,6 +39,7 @@ function SlideOverlay({
   setSocial,
   info,
   setInfo,
+  alertLogin,
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -140,6 +141,12 @@ function SlideOverlay({
       });
   };
 
+  function checkLogin() {
+    if (!isAuthenticated) {
+      alertLogin();
+    }
+  }
+
   return (
     <div className="slide-overlay">
       <div className="container-wrapper">
@@ -151,7 +158,7 @@ function SlideOverlay({
                 to={product && `/vendorpage/${product.idVendor}`}
               ></Link>
               <div className="wrapper">
-                <div className="follow-plus">
+                <div className="follow-plus" onClick={() => checkLogin()}>
                   <GoPlus
                     className={
                       isFollower && isAuthenticated
@@ -173,7 +180,10 @@ function SlideOverlay({
                         ? "#FF0000"
                         : "white",
                   }}
-                  onClick={() => handleAddFavorite()}
+                  onClick={() => {
+                    handleAddFavorite();
+                    checkLogin();
+                  }}
                 />
                 <span>
                   {formatLikesCount(
@@ -201,7 +211,10 @@ function SlideOverlay({
               </div>
             </div>
             <div className="smart-wrapper">
-              <Link to={isAuthenticated ? "/inbox/chat" : ""}>
+              <Link
+                to={isAuthenticated ? "/inbox/chat" : ""}
+                onClick={() => checkLogin()}
+              >
                 <div className="item">
                   <RiChatForwardLine />
                   <span>مراسلة التاجر</span>
