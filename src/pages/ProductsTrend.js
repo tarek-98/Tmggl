@@ -116,6 +116,7 @@ function ProductsTrend() {
       <Navbar />
       <TrendProducts
         sound={sound}
+        setSound={setSound}
         comment={comment}
         info={info}
         setInfo={setInfo}
@@ -124,16 +125,7 @@ function ProductsTrend() {
         setComment={setComment}
         products={products.products}
       />
-      <div
-        className={volume ? "volume-hide" : "volume"}
-        onClick={() => {
-          setSound(!sound);
-          setVolume(!volume);
-        }}
-      >
-        <FaVolumeXmark />
-        <span className="">Unmute</span>
-      </div>
+
       {product && (
         <div className={comment ? "comment-wrapper" : "comment-wrapper-hide"}>
           <div className="comment-wrapper-overlay"></div>

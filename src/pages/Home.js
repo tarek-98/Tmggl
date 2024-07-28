@@ -114,6 +114,7 @@ function Home() {
       <Navbar />
       <Product
         sound={sound}
+        setSound={setSound}
         comment={comment}
         info={info}
         setInfo={setInfo}
@@ -122,16 +123,6 @@ function Home() {
         setComment={setComment}
         products={products}
       />
-      <div
-        className={volume ? "volume-hide" : "volume"}
-        onClick={() => {
-          setSound(!sound);
-          setVolume(!volume);
-        }}
-      >
-        <FaVolumeXmark />
-        <span className="">Unmute</span>
-      </div>
 
       {product && (
         <div className={comment ? "comment-wrapper" : "comment-wrapper-hide"}>

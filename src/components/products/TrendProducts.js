@@ -15,9 +15,14 @@ import {
   shareProduct,
 } from "../../store/productSlice";
 import { increaseProductViews, addViewedProduct } from "../../store/sortSlice";
+import ControlPanel from "../control/controls/ControlPanel";
+import Slider from "../control/slider/Slider";
+import { AiOutlineSound } from "react-icons/ai";
+import { CiVolumeMute } from "react-icons/ci";
 
 function TrendProducts({
   sound,
+  setSound,
   comment,
   setComment,
   products,
@@ -72,6 +77,54 @@ function TrendProducts({
     }
   };
 
+  /*control*/
+  const [percentage, setPercentage] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [index, setIndex] = useState(0);
+  const videoRefs = useRef([]);
+  const [videoState, setVideoState] = useState(
+    products &&
+      products.map(() => ({
+        percentage: 0,
+        currentTime: 0,
+        duration: 0,
+      }))
+  );
+  useEffect(() => {
+    videoRefs.current = videoRefs.current.slice(0, products && products.length);
+  }, [products && products.length]);
+
+  const handleSliderChange = (index, event) => {
+    const video = videoRefs.current[index];
+    if (video) {
+      const newPercentage = event.target.value;
+      const newTime = (video.duration / 100) * newPercentage;
+      video.currentTime = newTime;
+
+      setVideoState((prevState) => {
+        const newState = [...prevState];
+        newState[index] = {
+          ...newState[index],
+          percentage: newPercentage,
+          currentTime: newTime,
+        };
+        return newState;
+      });
+    }
+  };
+
+  const getCurrDuration = (e) => {
+    const current = e.target.currentTime;
+    const duration = e.target.duration;
+    if (duration > 0) {
+      const percent = ((current / duration) * 100).toFixed(2);
+      setPercentage(+percent);
+      setCurrentTime(current.toFixed(2));
+    }
+  };
+  /* */
+
   return (
     <div className="video-card">
       <Swiper
@@ -123,21 +176,63 @@ function TrendProducts({
                         <div className="plyer-container">
                           <div>
                             <video
+                              poster={product.img}
                               id={index}
                               src={vid2}
+                              // src={product.video}
                               className="react-player"
                               autoPlay={index === 0 ? true : autoPlay}
                               muted={sound}
                               loop
                               playsInline={true}
-                              ref={videoRef}
+                              ref={(el) => (videoRefs.current[index] = el)}
+                              controls={false} // Disable default controls to use custom controls
+                              onTimeUpdate={getCurrDuration}
+                              onLoadedData={(e) => {
+                                const duration = e.target.duration;
+                                setVideoState((prevState) => {
+                                  const newState = [...prevState];
+                                  if (newState[index]) {
+                                    newState[index].duration = duration;
+                                  }
+                                  return newState;
+                                });
+                              }}
                               onPlay={() => {
+                                setIndex(index);
                                 setCurrentVideo(index);
                                 dispatch(fetchAsyncProductSingle(product._id));
                                 dispatch(shareProduct(product._id));
+                                localStorage.setItem(
+                                  "receiverId",
+                                  product.idVendor
+                                );
                               }}
                               onClick={() => togglePlay(index)}
                             ></video>
+                            <div className="controls">
+                              <Slider
+                                percentage={percentage}
+                                onChange={(e) => handleSliderChange(index, e)}
+                              />
+                              <ControlPanel
+                                duration={duration}
+                                currentTime={currentTime}
+                              />
+                              <div className="sound-icon ms-1">
+                                {sound ? (
+                                  <CiVolumeMute
+                                    className="fs-4"
+                                    onClick={() => setSound(false)}
+                                  />
+                                ) : (
+                                  <AiOutlineSound
+                                    className="fs-4"
+                                    onClick={() => setSound(true)}
+                                  />
+                                )}
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>

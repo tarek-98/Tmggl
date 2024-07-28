@@ -45,7 +45,7 @@ function BottomOption({ product, addProduct, setAddProduct, setSocial }) {
             </div> */}
             <div>
               <span className="ms-1">
-                {product.price + product.price * 0.15}
+                {product && product.price + product.price * 0.15}
               </span>
               <span>ر.س</span>
             </div>
