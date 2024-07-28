@@ -4,6 +4,7 @@ import {
   fetchMessagesAsync,
   selectMessages,
   addMessage,
+  clearMessages,
 } from "../../store/chatSlice";
 import "./inbox.css";
 import MessageItem from "./MessageItem";
@@ -17,16 +18,22 @@ const MessageList = ({ senderId, receiverId }) => {
   const [isAtBottom, setIsAtBottom] = useState(true);
 
   useEffect(() => {
+    // Clear previous messages when changing chat
+    dispatch(clearMessages());
+
     dispatch(fetchMessagesAsync({ senderId, receiverId }));
 
+    // Join the new chat room
     socket.connect();
     socket.emit("join", receiverId);
 
+    // Listen for new messages
     socket.on("newMessage", (message) => {
       dispatch(addMessage(message));
     });
 
     return () => {
+      socket.emit("leave", { senderId, receiverId });
       socket.off("newMessage");
       socket.disconnect();
     };
@@ -49,11 +56,11 @@ const MessageList = ({ senderId, receiverId }) => {
     }
   }, [messages, isAtBottom]);
 
-  useEffect(() => {
-    setInterval(() => {
-      dispatch(fetchMessagesAsync({ senderId, receiverId }));
-    }, 1000);
-  }, []);
+  // useEffect(() => {
+  //   setInterval(() => {
+  //     dispatch(fetchMessagesAsync({ senderId, receiverId }));
+  //   }, 1000);
+  // }, []);
 
   // Function to group messages by date
   const groupMessagesByDate = (messages) => {
