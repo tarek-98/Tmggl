@@ -32,7 +32,7 @@
 .footer-container .tab-container .tab-icon {
   width: 32px;
   height: 32px;
-  color: white;
+  color: #999;
   padding-bottom: 5px;
 }
 
@@ -40,13 +40,17 @@
   position: absolute;
   font-weight: 600;
   font-size: 10px;
-  color: rgb(255, 255, 255);
+  color: #999;
   text-align: center;
   top: 32px;
 }
 
-.footer-container .tab-container .tab-text.active {
-  color: red;
+.footer-container .tab-container.active .tab-icon {
+  color: white;
+}
+
+.footer-container .tab-container.active .tab-text {
+  color: white;
 }
 
 .cart-num {
@@ -72,6 +76,8 @@
 .cart-num-hide {
   display: none;
 }
+
+
 
 @media (min-width:768px) {
   .footer {
@@ -126,7 +132,7 @@
   .footer-container .tab-container .tab-icon {
     width: 32px;
     height: 32px;
-    color: black;
+    color: #ddd;
     padding-bottom: 5px;
     margin-left: 6px;
   }
@@ -134,10 +140,18 @@
   .footer-container .tab-container .tab-text {
     font-weight: 600;
     font-size: 20px;
-    color: black;
+    color: #ddd;
     text-align: center;
     position: relative;
     top: auto;
+  }
+
+  .footer-container .tab-container.active .tab-icon {
+    color: black;
+  }
+
+  .footer-container .tab-container.active .tab-text {
+    color: black;
   }
 
   .cart-num {

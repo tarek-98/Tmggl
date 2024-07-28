@@ -25,15 +25,19 @@ function Footer() {
     <div className="footer">
       <div>
         <footer className="footer-container">
-          <div className="tab-container">
+          <div
+            className={toggle === 0 ? "tab-container active" : "tab-container"}
+          >
             <Link to="/" className="tab-link" onClick={() => setToggle(0)}>
               <FaHome className="tab-icon" />
-              <div className={toggle === 0 ? "tab-text active" : "tab-text"}>
-                الرئيسية
-              </div>
+              <div className="tab-text">الرئيسية</div>
             </Link>
           </div>
-          <div className="tab-container pop">
+          <div
+            className={
+              toggle === 1 ? "tab-container active pop" : "tab-container pop"
+            }
+          >
             <Link
               to={isAuthenticated ? "/inbox" : "/login"}
               className="tab-link"
@@ -51,7 +55,11 @@ function Footer() {
               </div>
             </Link>
           </div>
-          <div className="tab-container pop">
+          <div
+            className={
+              toggle === 2 ? "tab-container active pop" : "tab-container pop"
+            }
+          >
             <Link
               to={isAuthenticated ? "/cart" : "/login"}
               className="tab-link"
@@ -68,7 +76,9 @@ function Footer() {
               </div>
             </Link>
           </div>
-          <div className="tab-container">
+          <div
+            className={toggle === 3 ? "tab-container active" : "tab-container"}
+          >
             <Link
               to={isAuthenticated ? "/profile" : "/login"}
               className="tab-link"
