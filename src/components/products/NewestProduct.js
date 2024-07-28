@@ -30,6 +30,8 @@ function NewestProduct({
   addProduct,
   setAddProduct,
   alertLogin,
+  setLoginPopup,
+  logInPopup,
 }) {
   const [social, setSocial] = useState(false);
   const dispatch = useDispatch();
@@ -243,6 +245,8 @@ function NewestProduct({
                       info={info}
                       setInfo={setInfo}
                       alertLogin={alertLogin}
+                      logInPopup={logInPopup}
+                      setLoginPopup={setLoginPopup}
                     />
                     <BottomOption
                       product={product}

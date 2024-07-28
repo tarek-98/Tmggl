@@ -8,7 +8,7 @@ import EditComment from "./EditComment";
 import AddReply from "./AddReply";
 import { FaUser } from "react-icons/fa";
 
-const Comments = ({ product, alertLogin }) => {
+const Comments = ({ product, alertLogin, setLoginPopup, logInPopup }) => {
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(null);
   const [replyMode, setReplyMode] = useState(null);
@@ -165,7 +165,12 @@ const Comments = ({ product, alertLogin }) => {
     <div className="comment-section">
       <form>
         <div className="comment-form">
-          <AddComment product={product} alertLogin={alertLogin} />
+          <AddComment
+            product={product}
+            alertLogin={alertLogin}
+            logInPopup={logInPopup}
+            setLoginPopup={setLoginPopup}
+          />
         </div>
         <ul className="comment-list">{content}</ul>
       </form>

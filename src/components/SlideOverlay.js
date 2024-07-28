@@ -40,6 +40,8 @@ function SlideOverlay({
   info,
   setInfo,
   alertLogin,
+  setLoginPopup,
+  logInPopup,
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -143,7 +145,8 @@ function SlideOverlay({
 
   function checkLogin() {
     if (!isAuthenticated) {
-      alertLogin();
+      // alertLogin();
+      setLoginPopup(true);
     }
   }
 

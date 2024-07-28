@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addComment } from "../../store/commentSlice";
 
-const AddComment = ({ product, alertLogin }) => {
+const AddComment = ({ product, alertLogin, setLoginPopup, logInPopup }) => {
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
   const { userInfo, isAuthenticated } = useSelector((state) => state.auth);
@@ -23,7 +23,8 @@ const AddComment = ({ product, alertLogin }) => {
 
   function checkLogin() {
     if (!isAuthenticated) {
-      alertLogin();
+      // alertLogin();
+      setLoginPopup(true);
     }
   }
 

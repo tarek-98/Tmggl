@@ -30,6 +30,8 @@ function Product({
   addProduct,
   setAddProduct,
   alertLogin,
+  setLoginPopup,
+  logInPopup,
 }) {
   const productsStatus = useSelector(getAllProductsStatus);
   const [social, setSocial] = useState(false);
@@ -247,6 +249,8 @@ function Product({
                       info={info}
                       setInfo={setInfo}
                       alertLogin={alertLogin}
+                      setLoginPopup={setLoginPopup}
+                      logInPopup={logInPopup}
                     />
                     <BottomOption
                       product={product}

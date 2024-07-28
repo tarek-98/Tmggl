@@ -2,7 +2,10 @@ import React, { Fragment, useEffect, useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import { FaVolumeXmark } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
-import { IoIosCloseCircleOutline } from "react-icons/io";
+import {
+  IoIosCloseCircleOutline,
+  IoMdCloseCircleOutline,
+} from "react-icons/io";
 import Comments from "../components/comments/CommentList";
 import NewestProduct from "../components/products/NewestProduct";
 import {
@@ -15,6 +18,10 @@ import {
 import Swal from "sweetalert2";
 import { addToCart } from "../store/cartSlice";
 import TrendProducts from "../components/products/TrendProducts";
+import "../components/login.css";
+import logo from "../assets/images/logo.jpeg";
+import { loginAsync } from "../store/authSlice";
+import { ToastContainer } from "react-toastify";
 
 function ProductsTrend() {
   const [volume, setVolume] = useState(false);
@@ -120,6 +127,32 @@ function ProductsTrend() {
     });
   }
 
+  /*log in popup */
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const { status } = useSelector((state) => state.auth);
+
+  const saudiPhoneNumberRegex = /^0[0-9]{9}$/;
+
+  useEffect(() => {
+    if (status === "logging in succeeded") {
+      setLoginPopup(false);
+    }
+  }, [status]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(status);
+    dispatch(loginAsync({ email, pass }));
+  };
+
+  const [logInPopup, setLoginPopup] = useState(false);
+  const toggleModal = () => {
+    setLoginPopup(!logInPopup);
+  };
+
+  /* */
+
   return (
     <Fragment>
       <Navbar />
@@ -134,6 +167,8 @@ function ProductsTrend() {
         setComment={setComment}
         products={products}
         alertLogin={alertLogin}
+        logInPopup={logInPopup}
+        setLoginPopup={setLoginPopup}
       />
 
       {product && (
@@ -152,7 +187,12 @@ function ProductsTrend() {
                 {comments.length > 0 ? "Comments" : "No Comments"}
               </h2>
             </div>
-            <Comments product={product} alertLogin={alertLogin} />
+            <Comments
+              product={product}
+              alertLogin={alertLogin}
+              logInPopup={logInPopup}
+              setLoginPopup={setLoginPopup}
+            />
           </div>
         </div>
       )}
@@ -317,6 +357,65 @@ function ProductsTrend() {
           </div>
         </div>
       )}
+
+      <div className="change-adddres">
+        <div className={`modal-overlay ${logInPopup ? "open" : ""}`}>
+          <div className={`modal-change ${logInPopup ? "open" : ""}`}>
+            <div className="close mb-3" onClick={toggleModal}>
+              <IoMdCloseCircleOutline className="fs-3" />
+            </div>
+            <div className="ps-1 pe-1">
+              <div className="saved-address ms-auto me-auto align-items-center justify-content-center pt-5 pb-5">
+                <div className="logIn-main">
+                  <div className="conatiner">
+                    <div className="row">
+                      <div className="col-lg-12">
+                        <div className="logo mb-3">
+                          <img src={logo} alt="" className="w-100" />
+                        </div>
+                        <h2 className="mb-3">اهلا عزيزي مستخدم تمقل</h2>
+                        <div className="form">
+                          <form
+                            onSubmit={handleSubmit}
+                            className=" d-flex flex-column"
+                          >
+                            <input
+                              className="mb-2"
+                              type="email"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              placeholder="مثال 0512345678"
+                              required
+                              // maxLength="10"
+                              // minLength="10"
+                              name="phone"
+                            />
+                            <input
+                              className="mb-2"
+                              type="password"
+                              value={pass}
+                              onChange={(e) => setPass(e.target.value)}
+                              // placeholder="مثال 0512345678"
+                              required
+                              // maxLength="10"
+                              // minLength="10"
+                              name="pass"
+                            />
+                            <button type="submit" className="mb-2" value="">
+                              تسجيل الدخول
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ToastContainer />
+      </div>
     </Fragment>
   );
 }
