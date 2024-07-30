@@ -18,11 +18,11 @@ const Chat = () => {
   const conversations = useSelector(selectConversations);
   const dispatch = useDispatch();
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
-  const userData = userInfo[`Client data`][0];
+  const userData = userInfo && userInfo[`Client data`][0];
   const { conversationId } = useParams();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const senderId = searchParams.get("senderId") || userData._id;
+  const senderId = searchParams.get("senderId") || (userData && userData._id);
   const receiverId =
     searchParams.get("receiverId") || localStorage.getItem("receiverId");
 
@@ -60,8 +60,6 @@ const Chat = () => {
       socket.off("newMessage");
     };
   }, [dispatch, senderId, receiverId]);
-
-
 
   return (
     <div className="main-chat">

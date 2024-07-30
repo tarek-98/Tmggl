@@ -115,7 +115,7 @@ function ProductSingle() {
     });
   }
 
-  const UserId = `66754d563efd7b1698104f14`;
+  const UserId = userData && userData._id;
   useEffect(() => {
     dispatch(fetchFavoriteProduct(UserId));
   }, []);
@@ -437,6 +437,20 @@ function ProductSingle() {
                     </div>
                   </div>
                 </div>
+                <div
+                  className="send-cart text-center mt-1 text-white"
+                  onClick={() => {
+                    if (activeItems === null) {
+                      sweetAlertOption();
+                    } else {
+                      setAddProduct((addProduct) => !addProduct);
+                      addToCartHandler(product);
+                      sweetAlertAdd();
+                    }
+                  }}
+                >
+                  اضف الي السلة
+                </div>
               </div>
             </div>
           </div>
@@ -450,7 +464,7 @@ function ProductSingle() {
               <IoMdCloseCircleOutline className="fs-3" />
             </div>
             <div className="ps-1 pe-1">
-              <div className="saved-address ms-auto me-auto align-items-center justify-content-center pt-5 pb-5">
+              <div className="saved-address ms-auto me-auto align-items-center justify-content-center pt-1 pb-1">
                 <div className="logIn-main">
                   <div className="conatiner">
                     <div className="row">

@@ -42,19 +42,16 @@ function Vendor() {
   const vendor = vendordata && vendordata.result;
   const { productsStatus } = useSelector((state) => state.product);
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
-  const data = useSelector(getProductsByVendor); //for test
-  // const data = useSelector(getAllProducts); //for test
+  const data = useSelector(getProductsByVendor);
   const products = data && data.data;
   const [vendorFollow, setVendorFollow] = useState(false);
   const [toggleNav, setToggleNav] = useState(0);
   const [isFollower, setIsFollower] = useState(0); // test
 
   useEffect(() => {
-    dispatch(fetchSingleVendor(id));
-    dispatch(fetchAsyncProducts());
     dispatch(fetchProductByVendor(id));
+    dispatch(fetchSingleVendor(id));
     console.log(products);
-    console.log(vendor);
     document.title = "صفحة التاجر";
   }, []);
 

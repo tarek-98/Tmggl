@@ -142,7 +142,7 @@ export const fetchProductByVendor = createAsyncThunk(
       `${API_URL}/products/products/${vendorId}`,
       {
         headers: {
-          authorization: `${Authorization}`,
+          authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoiV2VkIE1heSAyMiAyMDI0IDIzOjAwOjM5IEdNVCswMzAwIChFYXN0ZXJuIEV1cm9wZWFuIFN1bW1lciBUaW1lKSIsInVzZXJJZCI6IjY2NGEzNTQ2Njk4NTVkNmM3OGJhZjEyNiIsImlhdCI6MTcxNjQwODAzOX0.RofB89RZFmm_DvJN7cNCasLgfPYuuf8XBAvOzwO9vqk`,
           "Content-Type": "application/json",
         },
       }

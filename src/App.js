@@ -27,8 +27,10 @@ import OrderInfo from "./components/Orders/OrderInfo";
 import ProductsTrend from "./pages/ProductsTrend";
 import Chat from "./components/chat/Chat";
 import ConversationsPage from "./components/chat/ConversationList";
+import { useSelector } from "react-redux";
 
 function App() {
+  const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
   return (
     <div id="App" className="">
       <div className="home-page">
@@ -40,40 +42,79 @@ function App() {
                 <Route path="/" element={<Home />}></Route>
                 <Route path="/newest" element={<NewestProducts />}></Route>
                 <Route path="/trend" element={<ProductsTrend />}></Route>
-                <Route path="/following" element={<Following />}></Route>
+                <Route
+                  path="/following"
+                  element={isAuthenticated ? <Following /> : <Login />}
+                ></Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/verify-otp" element={<VerifyOtp />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/product/:id" element={<ProductSingle />} />
                 <Route path="/vendorpage/:id" element={<Vendor />} />
                 <Route path="/search" element={<SearchPage />}></Route>
-                <Route path="/cart" element={<CartPage />}></Route>
-                <Route path="/checkout" element={<CheckoutPage />}></Route>
-                <Route path="/inbox" element={<Inbox />}></Route>
+                <Route
+                  path="/cart"
+                  element={isAuthenticated ? <CartPage /> : <Login />}
+                ></Route>
+                <Route
+                  path="/checkout"
+                  element={isAuthenticated ? <CheckoutPage /> : <Login />}
+                ></Route>
+                <Route
+                  path="/inbox"
+                  element={isAuthenticated ? <Inbox /> : <Login />}
+                ></Route>
                 <Route
                   path="/inbox/notifications"
-                  element={<Notifications />}
+                  element={isAuthenticated ? <Notifications /> : <Login />}
                 ></Route>
                 <Route
                   path="/inbox/conversations"
-                  element={<ConversationsPage />}
+                  element={isAuthenticated ? <ConversationsPage /> : <Login />}
                 ></Route>
                 <Route
                   path="/inbox/conversations/chat"
-                  element={<Chat />}
+                  element={isAuthenticated ? <Chat /> : <Login />}
                 ></Route>
-                <Route path="/inbox/chat/:id" element={<Chat />}></Route>
-                <Route path="/profile" element={<Profile />}></Route>
-                <Route path="/profile/orders" element={<Orders />}></Route>
-                <Route path="/profile/orders/:id" element={<OrderInfo />} />
-                <Route path="/profile/favorites" element={<Favorite />}></Route>
-                <Route path="/profile/gifts" element={<Bocket />}></Route>
-                <Route path="/profile/editInfo" element={<EditInfo />} />
-                <Route path="/profile/address" element={<UserAddress />} />
-                <Route path="/profile/address/add" element={<AddAddress />} />
+                <Route
+                  path="/inbox/chat/:id"
+                  element={isAuthenticated ? <Chat /> : <Login />}
+                ></Route>
+                <Route
+                  path="/profile"
+                  element={isAuthenticated ? <Profile /> : <Login />}
+                ></Route>
+                <Route
+                  path="/profile/orders"
+                  element={isAuthenticated ? <Orders /> : <Login />}
+                ></Route>
+                <Route
+                  path="/profile/orders/:id"
+                  element={isAuthenticated ? <OrderInfo /> : <Login />}
+                />
+                <Route
+                  path="/profile/favorites"
+                  element={isAuthenticated ? <Favorite /> : <Login />}
+                ></Route>
+                <Route
+                  path="/profile/gifts"
+                  element={isAuthenticated ? <Bocket /> : <Login />}
+                ></Route>
+                <Route
+                  path="/profile/editInfo"
+                  element={isAuthenticated ? <EditInfo /> : <Login />}
+                />
+                <Route
+                  path="/profile/address"
+                  element={isAuthenticated ? <UserAddress /> : <Login />}
+                />
+                <Route
+                  path="/profile/address/add"
+                  element={isAuthenticated ? <AddAddress /> : <Login />}
+                />
                 <Route
                   path="/profile/address/editAddress/:id"
-                  element={<EditAddress />}
+                  element={isAuthenticated ? <EditAddress /> : <Login />}
                 />
               </Routes>
             </div>

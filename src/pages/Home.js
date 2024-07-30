@@ -371,7 +371,7 @@ function Home() {
               <IoMdCloseCircleOutline className="fs-3" />
             </div>
             <div className="ps-1 pe-1">
-              <div className="saved-address ms-auto me-auto align-items-center justify-content-center pt-5 pb-5">
+              <div className="saved-address ms-auto me-auto align-items-center justify-content-center pt-1 pb-1">
                 <div className="logIn-main">
                   <div className="conatiner">
                     <div className="row">
