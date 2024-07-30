@@ -52,7 +52,7 @@ function SearchFiltre() {
       // Sorting Test by price -  Low To High
       setProductCards([
         ...productCards.sort((a, b) => {
-          return a.unit_price - b.unit_price;
+          return a.price - b.price;
         }),
       ]);
     }
@@ -61,7 +61,7 @@ function SearchFiltre() {
       // Sorting Test by price -  High To Low
       setProductCards([
         ...productCards.sort((a, b) => {
-          return b.unit_price - a.unit_price;
+          return b.price - a.price;
         }),
       ]);
     }

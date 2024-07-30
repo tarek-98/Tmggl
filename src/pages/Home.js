@@ -41,7 +41,7 @@ function Home() {
 
   useEffect(() => {
     setLiveImg(null);
-    dispatch(fetchSingleVendor(product.idVendor));
+    dispatch(fetchSingleVendor(product && product.idVendor));
   }, [product]);
 
   const increaseQty = () => {
