@@ -32,6 +32,7 @@ function NewestProducts() {
   const productData = useSelector(getProductSingle);
   const product = productData.product;
   const comments = product ? product.comments : null;
+  const [screen, setScreen] = useState(false);
 
   const [quantity, setQuantity] = useState(1);
   const [livePrice, setLivePrice] = useState(null);

@@ -8,7 +8,6 @@ const initialState = {
   vendors: [],
   singleVendor: [],
   followers: [],
-  
 };
 
 export const fetchVendors = createAsyncThunk(
@@ -106,7 +105,7 @@ export const vendorsSlice = createSlice({
         state.singleVendor = action.payload;
         // Store vendor data using vendorId as the key
         const vendor = action.payload.result;
-        state[vendor._id] = vendor;
+        state[vendor && vendor._id] = vendor;
         console.log(vendor);
         state.status = "succeded";
       })

@@ -18,6 +18,8 @@ import Slider from "./control/slider/Slider";
 import ControlPanel from "./control/controls/ControlPanel";
 import { AiOutlineSound } from "react-icons/ai";
 import { CiVolumeMute } from "react-icons/ci";
+import WebAssetOffIcon from "@mui/icons-material/WebAssetOff";
+import WebIcon from "@mui/icons-material/Web";
 
 function Product({
   sound,
@@ -37,6 +39,7 @@ function Product({
   const [social, setSocial] = useState(false);
   const dispatch = useDispatch();
   const videoRef = useRef(null);
+  const [screen, setScreen] = useState(false);
   const viewedProducts = useSelector(
     (state) => state.sortedProducts.viewedProducts
   );
@@ -80,6 +83,7 @@ function Product({
     dispatch(fetchAsyncProductSingle(activeProduct._id));
     dispatch(shareProduct(activeProduct._id));
     setAutoPlay(true);
+    setScreen(false);
   };
 
   /*control*/
@@ -236,28 +240,40 @@ function Product({
                                 />
                               )}
                             </div>
+                            <div
+                              className="screen"
+                              onClick={() => setScreen(!screen)}
+                            >
+                              {screen ? <WebIcon /> : <WebAssetOffIcon />}
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <SlideOverlay
-                      product={product}
-                      comment={comment}
-                      setComment={setComment}
-                      social={social}
-                      setSocial={setSocial}
-                      info={info}
-                      setInfo={setInfo}
-                      alertLogin={alertLogin}
-                      setLoginPopup={setLoginPopup}
-                      logInPopup={logInPopup}
-                    />
-                    <BottomOption
-                      product={product}
-                      addProduct={addProduct}
-                      setAddProduct={setAddProduct}
-                      setSocial={setSocial}
-                    />
+                    {screen ? (
+                      ""
+                    ) : (
+                      <Fragment>
+                        <SlideOverlay
+                          product={product}
+                          comment={comment}
+                          setComment={setComment}
+                          social={social}
+                          setSocial={setSocial}
+                          info={info}
+                          setInfo={setInfo}
+                          alertLogin={alertLogin}
+                          setLoginPopup={setLoginPopup}
+                          logInPopup={logInPopup}
+                        />
+                        <BottomOption
+                          product={product}
+                          addProduct={addProduct}
+                          setAddProduct={setAddProduct}
+                          setSocial={setSocial}
+                        />
+                      </Fragment>
+                    )}
                   </SwiperSlide>
                 </Fragment>
               );

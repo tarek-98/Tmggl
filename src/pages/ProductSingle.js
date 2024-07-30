@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import "../components/singleProduct/singleProduct.css";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +26,8 @@ import { AiOutlineSound } from "react-icons/ai";
 import { loginAsync } from "../store/authSlice";
 import { ToastContainer } from "react-toastify";
 import { fetchSingleVendor, getSingleVendor } from "../store/vendorsSlice";
+import WebAssetOffIcon from "@mui/icons-material/WebAssetOff";
+import WebIcon from "@mui/icons-material/Web";
 
 function ProductSingle() {
   const { id } = useParams();
@@ -47,6 +49,7 @@ function ProductSingle() {
 
   const vendordata = useSelector(getSingleVendor);
   const vendor = vendordata && vendordata.result;
+  const [screen, setScreen] = useState(false);
 
   useEffect(() => {
     dispatch(fetchSingleVendor(product.idVendor));
@@ -241,27 +244,36 @@ function ProductSingle() {
                   />
                 )}
               </div>
+              <div className="screen" onClick={() => setScreen(!screen)}>
+                {screen ? <WebIcon /> : <WebAssetOffIcon />}
+              </div>
             </div>
           </div>
         </div>
-        <SlideOverlay
-          product={product}
-          comment={comment}
-          setComment={setComment}
-          social={social}
-          setSocial={setSocial}
-          info={info}
-          setInfo={setInfo}
-          alertLogin={alertLogin}
-          logInPopup={logInPopup}
-          setLoginPopup={setLoginPopup}
-        />
-        <BottomOption
-          product={product}
-          addProduct={addProduct}
-          setAddProduct={setAddProduct}
-          setSocial={setSocial}
-        />
+        {screen ? (
+          ""
+        ) : (
+          <Fragment>
+            <SlideOverlay
+              product={product}
+              comment={comment}
+              setComment={setComment}
+              social={social}
+              setSocial={setSocial}
+              info={info}
+              setInfo={setInfo}
+              alertLogin={alertLogin}
+              logInPopup={logInPopup}
+              setLoginPopup={setLoginPopup}
+            />
+            <BottomOption
+              product={product}
+              addProduct={addProduct}
+              setAddProduct={setAddProduct}
+              setSocial={setSocial}
+            />
+          </Fragment>
+        )}
       </div>
 
       {product && (

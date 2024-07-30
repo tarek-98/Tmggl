@@ -42,6 +42,7 @@ function ProductsTrend() {
   const { userInfo } = useSelector((state) => state.auth);
   const userData = userInfo ? userInfo[`Client data`][0] : null;
   const dispatch = useDispatch();
+  const [screen, setScreen] = useState(false);
 
   const vendordata = useSelector(getSingleVendor);
   const vendor = vendordata && vendordata.result;
