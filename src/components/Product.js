@@ -182,8 +182,8 @@ function Product({
                           <video
                             poster={product.img}
                             id={index}
-                            src={vid2}
-                            // src={product.video}
+                            // src={vid2}
+                            src={product.video}
                             className="react-player"
                             autoPlay={index === 0 ? true : autoPlay}
                             muted={sound}

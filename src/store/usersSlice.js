@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "https://tager.onrender.com";
+const API_URL = "https://tager-dpsl.onrender.com";
 const Authorization = localStorage.getItem("token");
 
 export const editUser = createAsyncThunk(

@@ -215,7 +215,7 @@ function SlideOverlay({
             </div>
             <div className="smart-wrapper">
               <Link
-                to={isAuthenticated ? "/inbox/chat" : ""}
+                to={isAuthenticated ? "/inbox/conversations/chat" : ""}
                 onClick={() => checkLogin()}
               >
                 <div className="item">

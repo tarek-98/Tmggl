@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { STATUS } from "../utils/status";
 import axios from "axios";
 
-const API_URL = "https://tager.onrender.com";
+const API_URL = "https://tager-dpsl.onrender.com";
 const Authorization = localStorage.getItem("token");
 
 const initialState = {
@@ -101,12 +101,7 @@ const productSlice = createSlice({
 export const fetchAsyncProducts = createAsyncThunk(
   "products/fetch",
   async () => {
-    const response = await axios.get(`${API_URL}/products/getall`, {
-      headers: {
-        authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aW1lIjoiV2VkIE1heSAyMiAyMDI0IDE5OjM5OjI5IEdNVCswMzAwICjYqtmI2YLZitiqINi02LHZgiDYo9mI2LHZiNio2Kcg2KfZhNi12YrZgdmKKSIsInVzZXJJZCI6IjY2NGEzNTQ2Njk4NTVkNmM3OGJhZjEyNiIsImlhdCI6MTcxNjM5NTk2OX0.MgCtXcPKZQwFHNmZ_eesNTi4oqDxCg4-kulBDIY8kXA`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axios.get(`${API_URL}/products/getall`);
     return response.data;
   }
 );
@@ -143,12 +138,15 @@ export const fetchAsyncProductSingle = createAsyncThunk(
 export const fetchProductByVendor = createAsyncThunk(
   "fetchProductByVendor/fetch",
   async (vendorId) => {
-    const response = await axios.get(`${API_URL}/products/products/${vendorId}`, {
-      headers: {
-        authorization: `${Authorization}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axios.get(
+      `${API_URL}/products/products/${vendorId}`,
+      {
+        headers: {
+          authorization: `${Authorization}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
     console.log(response.data);
     return response.data;
   }

@@ -26,6 +26,7 @@ import Favorite from "./components/favorite/Favorite";
 import OrderInfo from "./components/Orders/OrderInfo";
 import ProductsTrend from "./pages/ProductsTrend";
 import Chat from "./components/chat/Chat";
+import ConversationsPage from "./components/chat/ConversationList";
 
 function App() {
   return (
@@ -53,7 +54,15 @@ function App() {
                   path="/inbox/notifications"
                   element={<Notifications />}
                 ></Route>
-                <Route path="/inbox/chat" element={<Chat />}></Route>
+                <Route
+                  path="/inbox/conversations"
+                  element={<ConversationsPage />}
+                ></Route>
+                <Route
+                  path="/inbox/conversations/chat"
+                  element={<Chat />}
+                ></Route>
+                <Route path="/inbox/chat/:id" element={<Chat />}></Route>
                 <Route path="/profile" element={<Profile />}></Route>
                 <Route path="/profile/orders" element={<Orders />}></Route>
                 <Route path="/profile/orders/:id" element={<OrderInfo />} />

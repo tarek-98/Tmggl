@@ -30,7 +30,7 @@ function ProductSingle() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const productData = useSelector(getProductSingle);
-  const product = productData.product;
+  const product = productData && productData.product;
   const comments = product ? product.comments : null;
   const [volume, setVolume] = useState(false);
   const [sound, setSound] = useState(true);
@@ -47,7 +47,6 @@ function ProductSingle() {
 
   useEffect(() => {
     dispatch(fetchAsyncProductSingle(id));
-    console.log(product);
   }, []);
 
   const togglePlay = () => {
@@ -202,9 +201,9 @@ function ProductSingle() {
           <div>
             <video
               id={id}
-              src={vid}
+              src={product && product.video}
               className="react-player"
-              autoPlay
+              autoPlay={true}
               muted={sound}
               loop
               playsInline={true}

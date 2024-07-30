@@ -17,7 +17,7 @@
   flex-direction: column;
   background: rgb(255, 255, 255) !important;
   height: 100%;
-  overflow-y: scroll;
+  overflow: scroll;
   width: 100%;
 }
 
@@ -146,4 +146,24 @@
 .vendor-product-item .vendor-products-item video {
   object-fit: cover;
   width: 100%;
+  height: 400px;
+}
+
+.vendor-products-item {
+  position: relative;
+}
+
+.vendor-products-item .produt-details {
+  position: absolute;
+  bottom: 5%;
+  margin-right: 5px;
+  width: 95%;
+  background-color: white;
+  padding: 10px 30px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+
 }

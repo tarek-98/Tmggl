@@ -25,7 +25,7 @@ function Home() {
   const [addProduct, setAddProduct] = useState(false);
   const products = useSelector(getAllProducts);
   const productData = useSelector(getProductSingle);
-  const product = productData.product;
+  const product = productData && productData.product;
   const comments = product ? product.comments : null;
   const [quantity, setQuantity] = useState(1);
   const [livePrice, setLivePrice] = useState(null);

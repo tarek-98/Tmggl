@@ -37,7 +37,7 @@ const MessageList = ({ senderId, receiverId }) => {
       socket.off("newMessage");
       socket.disconnect();
     };
-  }, [dispatch, senderId, receiverId]);
+  }, [senderId, receiverId]);
 
   const handleScroll = () => {
     if (messageListRef.current) {
@@ -55,12 +55,6 @@ const MessageList = ({ senderId, receiverId }) => {
       messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
     }
   }, [messages, isAtBottom]);
-
-  // useEffect(() => {
-  //   setInterval(() => {
-  //     dispatch(fetchMessagesAsync({ senderId, receiverId }));
-  //   }, 1000);
-  // }, []);
 
   // Function to group messages by date
   const groupMessagesByDate = (messages) => {

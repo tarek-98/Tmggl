@@ -38,12 +38,13 @@ import ReviewList from "./ReviewList";
 function Vendor() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const vendor = useSelector(getSingleVendor);
+  const vendordata = useSelector(getSingleVendor);
+  const vendor = vendordata && vendordata.result;
   const { productsStatus } = useSelector((state) => state.product);
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
-  // const data = useSelector(getProductsByVendor); //for test
-  const data = useSelector(getAllProducts); //for test
-  const products = data;
+  const data = useSelector(getProductsByVendor); //for test
+  // const data = useSelector(getAllProducts); //for test
+  const products = data && data.data;
   const [vendorFollow, setVendorFollow] = useState(false);
   const [toggleNav, setToggleNav] = useState(0);
   const [isFollower, setIsFollower] = useState(0); // test
@@ -53,6 +54,7 @@ function Vendor() {
     dispatch(fetchAsyncProducts());
     dispatch(fetchProductByVendor(id));
     console.log(products);
+    console.log(vendor);
     document.title = "صفحة التاجر";
   }, []);
 
@@ -93,9 +95,17 @@ function Vendor() {
             </div>
           </Col>
           <Col lg="12" className="mb-3">
-            <div className="d-flex justify-content-center align-items-center">
-              <div className="vendor-image">
-                <img src={logo1} alt="vendorImage" />
+            <div className="d-flex justify-content-center align-items-center flex-column">
+              <div className="vendor-image mb-1">
+                {vendor && vendor.logo ? (
+                  <img src={vendor && vendor.logo} alt="vendorImage" />
+                ) : (
+                  <img src={logo1} alt="vendorImage" />
+                )}
+              </div>
+              <div className="vendor-loc fw-bold">
+                <span>مقر البائع : </span>
+                <span>{vendor && vendor.vendorLocation}</span>
               </div>
             </div>
           </Col>
@@ -138,10 +148,10 @@ function Vendor() {
                 </Link>
               </div>
               <div className="vendor-name">
-                <span>{vendor.name}</span>
+                <span>{vendor && vendor.brandName}</span>
               </div>
               <div className="vendor-chat">
-                <Link to={isAuthenticated ? "/inbox/chat" : ""}>
+                <Link to={isAuthenticated ? "/inbox/conversations/chat" : ""}>
                   <FaRocketchat />
                   <span>مراسلة التاجر</span>
                 </Link>
@@ -207,19 +217,21 @@ function Vendor() {
                                   <div className="vendor-products-item">
                                     <Link
                                       to={`/product/${product._id}`}
-                                      className="text-decoration-none"
+                                      className="text-decoration-none "
                                     >
                                       <div className="image">
                                         <video
-                                          // poster={`${img_url}/${product.images[0]}`}
                                           className="react-player"
-                                          src={vid2}
+                                          src={product && product.video}
                                           muted={true}
                                           loop
                                           playsInline={true}
                                         ></video>
                                       </div>
                                     </Link>
+                                    <div className="produt-details d-flex justify-content-center align-items-center text-dark gap-3">
+                                      <span>{product && product.name}</span>
+                                    </div>
                                   </div>
                                 </Col>
                               </Fragment>

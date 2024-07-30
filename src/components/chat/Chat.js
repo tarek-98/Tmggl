@@ -3,20 +3,33 @@ import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client";
 import MessageList from "./MessageList";
 import MessageInput from "./MessageInput";
-import { fetchMessagesAsync } from "../../store/chatSlice";
+import {
+  fetchConversations,
+  fetchMessagesAsync,
+  selectConversations,
+} from "../../store/chatSlice";
 import "./inbox.css";
 import Swal from "sweetalert2";
+import { useLocation, useParams } from "react-router";
 
 const socket = io("https://tager.onrender.com"); // Replace with your Socket.io server URL
 
 const Chat = () => {
+  const conversations = useSelector(selectConversations);
   const dispatch = useDispatch();
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
   const userData = userInfo[`Client data`][0];
-  const senderId = userData ? userData._id : null;
+  const { conversationId } = useParams();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const senderId = searchParams.get("senderId") || userData._id;
+  const receiverId =
+    searchParams.get("receiverId") || localStorage.getItem("receiverId");
 
-  const receiverId = localStorage.getItem("receiverId");
-  // const receiverId = `667c680074002d1fded8bc9f`;
+  useEffect(() => {
+    console.log(senderId);
+    console.log(receiverId);
+  }, []);
 
   useEffect(() => {
     Swal.fire({
@@ -25,7 +38,7 @@ const Chat = () => {
       icon: "info",
       confirmButtonText: "قرأت و فهمت",
     });
-  });
+  }, []);
 
   useEffect(() => {
     document.title = "تمقل - الرسائل";
@@ -47,6 +60,8 @@ const Chat = () => {
       socket.off("newMessage");
     };
   }, [dispatch, senderId, receiverId]);
+
+
 
   return (
     <div className="main-chat">

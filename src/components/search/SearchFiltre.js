@@ -3,22 +3,22 @@ import "./search.css";
 import { IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { fetchAsyncProducts, getAllProducts } from "../../store/productSlice";
-import vid from "../../videos/video1.mp4";
-import { MdArrowOutward, MdLocalShipping } from "react-icons/md";
+import { MdArrowOutward } from "react-icons/md";
 import { fetchVendors, getAllVendors } from "../../store/vendorsSlice";
 import { IoSearch } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 
 function SearchFiltre() {
+  const dispatch = useDispatch();
   const products = useSelector(getAllProducts);
-  const vendors = useSelector(getAllVendors);
+  const vendorsData = useSelector(getAllVendors);
+  const vendors = vendorsData && vendorsData.result;
   const [filterItem, setFilterItem] = useState("المنتجات");
   const [search, setSearch] = useState("");
   const [searchMenu, setSearchMenu] = useState(false);
   const [searchSuggest, setSearchSuggest] = useState(false);
 
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchAsyncProducts());
     dispatch(fetchVendors());
@@ -37,9 +37,11 @@ function SearchFiltre() {
     product.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  const filterVendors = vendors.filter((vendor) =>
-    vendor.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filterVendors =
+    vendors &&
+    vendors.filter((vendor) =>
+      vendor.vendorName.toLowerCase().includes(search.toLowerCase())
+    );
 
   const [productCards, setProductCards] = useState(filterItems);
 
@@ -166,14 +168,14 @@ function SearchFiltre() {
               .map((product, index) => (
                 <div key={index} className="link text-center mb-3">
                   <Link
-                    to={`/product/${product.id}`}
+                    to={`/product/${product._id}`}
                     className="text-decoration-none"
                   >
                     <div className="video-container position-relative">
                       <div className="position-relative">
                         <video
                           id="VideoPlayer"
-                          src={vid}
+                          src={product.video}
                           className="video-player"
                           autoPlay={false}
                           muted={true}
@@ -181,14 +183,11 @@ function SearchFiltre() {
                           playsInline={true}
                         ></video>
                         <div className="filterItem-price position-absolute">
-                          <div className="free-shopping">
-                            <MdLocalShipping className="text-white fs-6" />
-                            <span className="free-shipping">شحن مجاني</span>
-                          </div>
                           <span className="price-dir">
-                            <span className="ms-1">{product.unit_price}</span>
+                            <span className="ms-1">{product.price}</span>
                             <span>ر.س</span>
                           </span>
+                          <p className="mb-0 text-white">{product.name}</p>
                         </div>
                       </div>
                     </div>
@@ -203,12 +202,12 @@ function SearchFiltre() {
                 {filterVendors.map((vendor, index) => (
                   <div key={index} className="link mb-3">
                     <Link
-                      to={`/vendorpage/${vendor.id}`}
+                      to={`/vendorpage/${vendor._id}`}
                       className="text-decoration-none"
                     >
                       <div className="ps-3">
                         <FaRegUser className="me-2" />
-                        <span>{vendor.name}</span>
+                        <span>{vendor.vendorName}</span>
                       </div>
                       <MdArrowOutward className="trans-270" />
                     </Link>
@@ -270,7 +269,7 @@ function SearchFiltre() {
                     >
                       <div className="ps-3">
                         <FaRegUser className="me-2" />
-                        <span>{vendor.name}</span>
+                        <span>{vendor.vendorName}</span>
                       </div>
                       <MdArrowOutward className="trans-270" />
                     </div>

@@ -1,24 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "https://tager.onrender.com";
+const API_URL = "https://tager-dpsl.onrender.com";
 const Authorization = localStorage.getItem("token");
 
 const initialState = {
   vendors: [],
   singleVendor: [],
   followers: [],
+  
 };
 
 export const fetchVendors = createAsyncThunk(
   "vendors/fetchVendors",
-  async (userId) => {
-    const res = await fetch(`${API_URL}/client/all-followers/${userId}`, {
-      headers: {
-        Authorization: `${Authorization}`,
-        "Content-Type": "application/json",
-      },
-    });
+  async () => {
+    const res = await fetch(`${API_URL}/admin/all-vendors`);
     const data = await res.json();
     return data;
   }
@@ -41,8 +37,9 @@ export const fetchFollowers = createAsyncThunk(
 export const fetchSingleVendor = createAsyncThunk(
   "vendors/fetchSingleVendor",
   async (id) => {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+    const res = await fetch(`${API_URL}/admin/vendor/${id}`);
     const data = await res.json();
+    console.log(data);
     return data;
   }
 );
@@ -107,6 +104,10 @@ export const vendorsSlice = createSlice({
       })
       .addCase(fetchSingleVendor.fulfilled, (state, action) => {
         state.singleVendor = action.payload;
+        // Store vendor data using vendorId as the key
+        const vendor = action.payload.result;
+        state[vendor._id] = vendor;
+        console.log(vendor);
         state.status = "succeded";
       })
       .addCase(fetchSingleVendor.rejected, (state, action) => {
@@ -150,4 +151,5 @@ export const {} = vendorsSlice.actions;
 export const getAllVendors = (state) => state.vendors.vendors;
 export const getAllFollowers = (state) => state.vendors.followers;
 export const getSingleVendor = (state) => state.vendors.singleVendor;
+export const selectVendorById = (state, vendorId) => state.vendors[vendorId];
 export default vendorsSlice.reducer;

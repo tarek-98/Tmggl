@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "https://tager.onrender.com";
+const API_URL = "https://tager-dpsl.onrender.com";
 
 // Thunks for sending OTP and verifying OTP
 export const sendOTP = createAsyncThunk("auth/sendOTP", async (phoneNumber) => {

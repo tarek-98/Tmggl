@@ -14,7 +14,7 @@ function Inbox() {
           <span className="float"></span>
         </div>
         <div className="chat">
-          <Link to="/inbox/chat">الرسائل</Link>
+          <Link to="/inbox/conversations">الرسائل</Link>
           <span className="float"></span>
         </div>
       </div>

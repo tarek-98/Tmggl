@@ -233,8 +233,15 @@
 }
 
 .search-result-container .link {
-  flex-basis: 48%;
+  flex-basis: 30%;
   margin-right: 5px;
+}
+
+@media (max-width:767px) {
+  .search-result-container .link {
+    flex-basis: 48%;
+    margin-right: 5px;
+  }
 }
 
 .search-suggest-container .search-suggest-item {
@@ -251,7 +258,7 @@
 
 .search-result-container .video-container video {
   width: 100%;
-  height: 300px;
+  height: 400px;
   object-fit: fill;
 }
 
