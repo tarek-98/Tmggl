@@ -19,6 +19,8 @@ import logo from "../assets/images/logo.jpeg";
 import { useNavigate } from "react-router";
 import { loginAsync } from "../store/authSlice";
 import { ToastContainer } from "react-toastify";
+import { fetchSingleVendor, getSingleVendor } from "../store/vendorsSlice";
+import { addToCart } from "../store/cartSlice";
 
 function NewestProducts() {
   const [volume, setVolume] = useState(false);
@@ -39,10 +41,14 @@ function NewestProducts() {
   const [discount, setdiscount] = useState(false);
   const dispatch = useDispatch();
 
+  const vendordata = useSelector(getSingleVendor);
+  const vendor = vendordata && vendordata.result;
+
   useEffect(() => {
-    console.log(productData);
-    console.log(product);
-  }, []);
+    setLiveImg(null);
+    dispatch(fetchSingleVendor(product.idVendor));
+  }, [product]);
+
   useEffect(() => {
     dispatch(fetchAsyncNewestProducts());
   }, []);
@@ -90,6 +96,20 @@ function NewestProducts() {
   useEffect(() => {
     document.title = "تمقل - احدث المنتجات";
   }, []);
+
+  const addToCartHandler = (product) => {
+    let productLocation = "الرياض";
+    let vendorName = "احمد";
+
+    dispatch(
+      addToCart({
+        ...product,
+        quantity: quantity,
+        productLocation,
+        vendorName,
+      })
+    );
+  };
 
   // Grouping by namechoose
   const groupedChooses =
@@ -246,7 +266,9 @@ function NewestProducts() {
                     <div className="title mb-3">{product.name}</div>
                     <div className="product loc">
                       <span>يشحن من </span>
-                      <span className=" text-danger">الرياض</span>
+                      <span className=" text-danger">
+                        {vendor && vendor.vendorLocation}
+                      </span>
                     </div>
                     <div className="price mb-2">
                       <div className="d-flex align-center">
@@ -308,14 +330,15 @@ function NewestProducts() {
                                   pricetypechoose,
                                   pricechoose,
                                   img,
-                                  color,
+                                  typeOfChoose,
                                 }) => (
                                   <ul className="size-list" key={_id}>
                                     <li
                                       className="list-item"
-                                      onClick={() =>
-                                        handleItemClick(namechoose, _id)
-                                      }
+                                      onClick={() => {
+                                        handleItemClick(namechoose, _id);
+                                        setLivePrice(pricechoose);
+                                      }}
                                     >
                                       <span
                                         className={
@@ -324,7 +347,7 @@ function NewestProducts() {
                                             : "list-item-opt"
                                         }
                                       >
-                                        {color}
+                                        {typeOfChoose}
                                       </span>
                                     </li>
                                   </ul>
@@ -336,6 +359,20 @@ function NewestProducts() {
                       )}
                     </div>
                   </div>
+                </div>
+                <div
+                  className="send-cart text-center mt-1 text-white"
+                  onClick={() => {
+                    if (activeItems === null) {
+                      sweetAlertOption();
+                    } else {
+                      setAddProduct((addProduct) => !addProduct);
+                      addToCartHandler(product);
+                      sweetAlertAdd();
+                    }
+                  }}
+                >
+                  اضف الي السلة
                 </div>
               </div>
             </div>

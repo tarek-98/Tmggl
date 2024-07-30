@@ -16,6 +16,7 @@ import { fetchFavoriteProduct } from "../store/favorite-slice";
 import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router";
 import { loginAsync } from "../store/authSlice";
+import { fetchSingleVendor, getSingleVendor } from "../store/vendorsSlice";
 
 function Home() {
   const [volume, setVolume] = useState(false);
@@ -35,8 +36,12 @@ function Home() {
   const UserId = userData ? userData._id : null;
   const dispatch = useDispatch();
 
+  const vendordata = useSelector(getSingleVendor);
+  const vendor = vendordata && vendordata.result;
+
   useEffect(() => {
     setLiveImg(null);
+    dispatch(fetchSingleVendor(product.idVendor));
   }, [product]);
 
   const increaseQty = () => {
@@ -253,7 +258,9 @@ function Home() {
                     <div className="title mb-3">{product.name}</div>
                     <div className="product loc">
                       <span>يشحن من </span>
-                      <span className=" text-danger">الرياض</span>
+                      <span className=" text-danger">
+                        {vendor && vendor.vendorLocation}
+                      </span>
                     </div>
                     <div className="price mb-2">
                       <div className="d-flex align-center">
@@ -315,14 +322,16 @@ function Home() {
                                   pricetypechoose,
                                   pricechoose,
                                   img,
-                                  color,
+                                  typeOfChoose,
                                 }) => (
                                   <ul className="size-list" key={_id}>
                                     <li
                                       className="list-item"
-                                      onClick={() =>
-                                        handleItemClick(namechoose, _id)
-                                      }
+                                      onClick={() => {
+                                        handleItemClick(namechoose, _id);
+                                        setLivePrice(pricechoose);
+                                        console.log(pricechoose);
+                                      }}
                                     >
                                       <span
                                         className={
@@ -331,7 +340,7 @@ function Home() {
                                             : "list-item-opt"
                                         }
                                       >
-                                        {color}
+                                        {typeOfChoose}
                                       </span>
                                     </li>
                                   </ul>

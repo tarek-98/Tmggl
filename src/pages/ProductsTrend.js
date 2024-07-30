@@ -22,6 +22,7 @@ import "../components/login.css";
 import logo from "../assets/images/logo.jpeg";
 import { loginAsync } from "../store/authSlice";
 import { ToastContainer } from "react-toastify";
+import { fetchSingleVendor, getSingleVendor } from "../store/vendorsSlice";
 
 function ProductsTrend() {
   const [volume, setVolume] = useState(false);
@@ -42,10 +43,14 @@ function ProductsTrend() {
   const userData = userInfo ? userInfo[`Client data`][0] : null;
   const dispatch = useDispatch();
 
+  const vendordata = useSelector(getSingleVendor);
+  const vendor = vendordata && vendordata.result;
+
   useEffect(() => {
-    console.log(productData);
-    console.log(product);
-  }, []);
+    setLiveImg(null);
+    dispatch(fetchSingleVendor(product.idVendor));
+  }, [product]);
+
   useEffect(() => {
     dispatch(fetchAsyncTrendProducts());
   }, []);
@@ -261,7 +266,9 @@ function ProductsTrend() {
                     <div className="title mb-3">{product.name}</div>
                     <div className="product loc">
                       <span>يشحن من </span>
-                      <span className=" text-danger">الرياض</span>
+                      <span className=" text-danger">
+                        {vendor && vendor.vendorLocation}
+                      </span>
                     </div>
                     <div className="price mb-2">
                       <div className="d-flex align-center">
@@ -323,14 +330,15 @@ function ProductsTrend() {
                                   pricetypechoose,
                                   pricechoose,
                                   img,
-                                  color,
+                                  typeOfChoose,
                                 }) => (
                                   <ul className="size-list" key={_id}>
                                     <li
                                       className="list-item"
-                                      onClick={() =>
-                                        handleItemClick(namechoose, _id)
-                                      }
+                                      onClick={() => {
+                                        handleItemClick(namechoose, _id);
+                                        setLivePrice(pricechoose);
+                                      }}
                                     >
                                       <span
                                         className={
@@ -339,7 +347,7 @@ function ProductsTrend() {
                                             : "list-item-opt"
                                         }
                                       >
-                                        {color}
+                                        {typeOfChoose}
                                       </span>
                                     </li>
                                   </ul>
@@ -351,6 +359,20 @@ function ProductsTrend() {
                       )}
                     </div>
                   </div>
+                </div>
+                <div
+                  className="send-cart text-center mt-1 text-white"
+                  onClick={() => {
+                    if (activeItems === null) {
+                      sweetAlertOption();
+                    } else {
+                      setAddProduct((addProduct) => !addProduct);
+                      addToCartHandler(product);
+                      sweetAlertAdd();
+                    }
+                  }}
+                >
+                  اضف الي السلة
                 </div>
               </div>
             </div>

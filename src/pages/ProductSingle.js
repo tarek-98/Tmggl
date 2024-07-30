@@ -25,6 +25,7 @@ import { CiVolumeMute } from "react-icons/ci";
 import { AiOutlineSound } from "react-icons/ai";
 import { loginAsync } from "../store/authSlice";
 import { ToastContainer } from "react-toastify";
+import { fetchSingleVendor, getSingleVendor } from "../store/vendorsSlice";
 
 function ProductSingle() {
   const { id } = useParams();
@@ -32,7 +33,6 @@ function ProductSingle() {
   const productData = useSelector(getProductSingle);
   const product = productData && productData.product;
   const comments = product ? product.comments : null;
-  const [volume, setVolume] = useState(false);
   const [sound, setSound] = useState(true);
   const [comment, setComment] = useState(false);
   const [info, setInfo] = useState(false);
@@ -44,6 +44,14 @@ function ProductSingle() {
   const { userInfo } = useSelector((state) => state.auth);
   const userData = userInfo ? userInfo[`Client data`][0] : null;
   const videoRef = useRef(null);
+
+  const vendordata = useSelector(getSingleVendor);
+  const vendor = vendordata && vendordata.result;
+
+  useEffect(() => {
+    dispatch(fetchSingleVendor(product.idVendor));
+    setLiveImg(null);
+  }, [product]);
 
   useEffect(() => {
     dispatch(fetchAsyncProductSingle(id));
@@ -346,7 +354,9 @@ function ProductSingle() {
                     <div className="title mb-3">{product.name}</div>
                     <div className="product loc">
                       <span>يشحن من </span>
-                      <span className=" text-danger">الرياض</span>
+                      <span className=" text-danger">
+                        {vendor && vendor.vendorLocation}
+                      </span>
                     </div>
                     <div className="price mb-2">
                       <div className="d-flex align-center">
@@ -408,14 +418,15 @@ function ProductSingle() {
                                   pricetypechoose,
                                   pricechoose,
                                   img,
-                                  color,
+                                  typeOfChoose,
                                 }) => (
                                   <ul className="size-list" key={_id}>
                                     <li
                                       className="list-item"
-                                      onClick={() =>
-                                        handleItemClick(namechoose, _id)
-                                      }
+                                      onClick={() => {
+                                        handleItemClick(namechoose, _id);
+                                        setLivePrice(pricechoose);
+                                      }}
                                     >
                                       <span
                                         className={
@@ -424,7 +435,7 @@ function ProductSingle() {
                                             : "list-item-opt"
                                         }
                                       >
-                                        {color}
+                                        {typeOfChoose}
                                       </span>
                                     </li>
                                   </ul>
