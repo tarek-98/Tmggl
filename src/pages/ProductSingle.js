@@ -52,7 +52,7 @@ function ProductSingle() {
   const [screen, setScreen] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchSingleVendor(product.idVendor));
+    dispatch(fetchSingleVendor(product && product.idVendor));
     setLiveImg(null);
   }, [product]);
 
