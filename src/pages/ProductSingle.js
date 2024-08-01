@@ -6,7 +6,6 @@ import {
   fetchAsyncProductSingle,
   getProductSingle,
 } from "../store/productSlice";
-import vid from "../videos/Download.mp4";
 import SlideOverlay from "../components/SlideOverlay";
 import BottomOption from "../components/BottomOption";
 import "../components/login.css";
@@ -25,7 +24,12 @@ import { CiVolumeMute } from "react-icons/ci";
 import { AiOutlineSound } from "react-icons/ai";
 import { loginAsync } from "../store/authSlice";
 import { ToastContainer } from "react-toastify";
-import { fetchSingleVendor, getSingleVendor } from "../store/vendorsSlice";
+import {
+  fetchFollowers,
+  fetchSingleVendor,
+  getAllFollowers,
+  getSingleVendor,
+} from "../store/vendorsSlice";
 import WebAssetOffIcon from "@mui/icons-material/WebAssetOff";
 import WebIcon from "@mui/icons-material/Web";
 

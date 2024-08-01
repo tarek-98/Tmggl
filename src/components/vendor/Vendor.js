@@ -2,9 +2,12 @@ import React, { Fragment, useEffect, useState } from "react";
 import "./vendor.css";
 import { useParams } from "react-router";
 import {
+  fetchFollowers,
   fetchSingleVendor,
   followVendor,
+  getAllFollowers,
   getSingleVendor,
+  selectVendorById,
   unFollowVendor,
 } from "../../store/vendorsSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +19,6 @@ import { FaRocketchat } from "react-icons/fa6";
 import { SlUserFollow } from "react-icons/sl";
 import { SlUserUnfollow } from "react-icons/sl";
 import logo1 from "../../assets/images/logo1.png";
-import { toast, ToastContainer } from "react-toastify";
 import Marquee from "react-fast-marquee";
 import applePay from "../../assets/images/vat/Apple.png";
 import visa from "../../assets/images/vat/visa.png";
@@ -24,34 +26,32 @@ import logo3 from "../../assets/images/vat/Mada.png";
 import logo4 from "../../assets/images/vat/MasterCard.png";
 import { fetchPaymentsMethods } from "../../store/tabbySlice";
 import {
-  fetchAsyncProducts,
   fetchProductByVendor,
-  getAllProducts,
   getProductsByVendor,
 } from "../../store/productSlice";
-import vid2 from "../../videos/Download.mp4";
 import { CircularProgress } from "@mui/material";
 import { Container, CssBaseline } from "@mui/material";
 import ReviewForm from "./ReviewForm";
 import ReviewList from "./ReviewList";
+import { toast, ToastContainer } from "react-toastify";
 
 function Vendor() {
   const { id } = useParams();
+  const vendorId = id;
   const dispatch = useDispatch();
   const vendordata = useSelector(getSingleVendor);
-  const vendor = vendordata && vendordata.result;
+  // const vendor = vendordata && vendordata.result;
+  const vendor = useSelector((state) => selectVendorById(state, vendorId));
   const { productsStatus } = useSelector((state) => state.product);
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
   const data = useSelector(getProductsByVendor);
   const products = data && data.data;
-  const [vendorFollow, setVendorFollow] = useState(false);
   const [toggleNav, setToggleNav] = useState(0);
-  const [isFollower, setIsFollower] = useState(0); // test
 
   useEffect(() => {
     dispatch(fetchProductByVendor(id));
     dispatch(fetchSingleVendor(id));
-    console.log(products);
+    localStorage.setItem("receiverId", id);
     document.title = "صفحة التاجر";
   }, []);
 
@@ -60,24 +60,32 @@ function Vendor() {
   useEffect(() => {
     dispatch(fetchPaymentsMethods());
     console.log(productsStatus);
-  }, [dispatch]);
+  }, []);
   const enabledPayment = payments.filter((method) => method.enabled);
   /* */
 
-  // const isFollower = products.some((follow) => follow.id === id); //test fav
+  const followersdata = useSelector(getAllFollowers);
+  const followers = followersdata && followersdata.result;
+  const isFollower = followers && followers.some((follow) => follow._id === id); //test follower
   const userData = userInfo ? userInfo[`Client data`][0] : null;
   const UserId = userData ? userData._id : null;
   function handleFollowVendor() {
-    setVendorFollow(!vendorFollow);
-    if (!isFollower) {
+    if (!isAuthenticated) {
+      toast.info("تسجيل الدخول اولا", {
+        position: "top-left",
+      });
+    } else if (!isFollower && isAuthenticated) {
       dispatch(followVendor({ VendorId: id, UserId }));
-    } else {
+    } else if (isAuthenticated) {
       dispatch(unFollowVendor({ VendorId: id, UserId }));
     }
   }
 
-  const img_url =
-    "https://gomla-wbs.el-programmer.com/storage/app/public/product";
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchFollowers(UserId));
+    }
+  }, []);
 
   return (
     <div className="vendor-main pt-4">

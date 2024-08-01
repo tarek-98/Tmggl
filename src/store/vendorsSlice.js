@@ -68,7 +68,13 @@ export const unFollowVendor = createAsyncThunk(
   async ({ VendorId, UserId }, { rejectWithValue }) => {
     try {
       const response = await axios.delete(
-        `${API_URL}/client/unfollow-vendor/${VendorId}/${UserId}`
+        `${API_URL}/client/unfollow-vendor/${VendorId}/${UserId}`,
+        {
+          headers: {
+            Authorization: `${Authorization}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       console.log(response.data);
       console.log(UserId, VendorId);
@@ -106,7 +112,6 @@ export const vendorsSlice = createSlice({
         // Store vendor data using vendorId as the key
         const vendor = action.payload.result;
         state[vendor && vendor._id] = vendor;
-        console.log(vendor);
         state.status = "succeded";
       })
       .addCase(fetchSingleVendor.rejected, (state, action) => {

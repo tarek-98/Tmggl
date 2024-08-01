@@ -16,7 +16,12 @@ import { fetchFavoriteProduct } from "../store/favorite-slice";
 import { ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router";
 import { loginAsync } from "../store/authSlice";
-import { fetchSingleVendor, getSingleVendor } from "../store/vendorsSlice";
+import {
+  fetchFollowers,
+  fetchSingleVendor,
+  getAllFollowers,
+  getSingleVendor,
+} from "../store/vendorsSlice";
 
 function Home() {
   const [volume, setVolume] = useState(false);
@@ -150,7 +155,6 @@ function Home() {
   };
 
   /* */
-
   return (
     <Fragment>
       <Navbar />

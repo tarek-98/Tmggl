@@ -20,6 +20,7 @@ import { AiOutlineSound } from "react-icons/ai";
 import { CiVolumeMute } from "react-icons/ci";
 import WebAssetOffIcon from "@mui/icons-material/WebAssetOff";
 import WebIcon from "@mui/icons-material/Web";
+import { fetchSingleVendor } from "../../store/vendorsSlice";
 
 function NewestProduct({
   sound,
@@ -61,6 +62,7 @@ function NewestProduct({
     dispatch(shareProduct(activeProduct._id));
     setAutoPlay(true);
     setScreen(false);
+    dispatch(fetchSingleVendor(activeProduct.idVendor));
   };
 
   const togglePlay = (index) => {

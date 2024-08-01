@@ -20,6 +20,7 @@ import { AiOutlineSound } from "react-icons/ai";
 import { CiVolumeMute } from "react-icons/ci";
 import WebAssetOffIcon from "@mui/icons-material/WebAssetOff";
 import WebIcon from "@mui/icons-material/Web";
+import { fetchSingleVendor } from "../store/vendorsSlice";
 
 function Product({
   sound,
@@ -84,6 +85,7 @@ function Product({
     dispatch(shareProduct(activeProduct._id));
     setAutoPlay(true);
     setScreen(false);
+    dispatch(fetchSingleVendor(activeProduct.idVendor));
   };
 
   /*control*/
@@ -98,6 +100,7 @@ function Product({
         percentage: 0,
         currentTime: 0,
         duration: 0,
+        loading: true, // Initial loading state
       }))
   );
   useEffect(() => {
@@ -132,6 +135,7 @@ function Product({
       setCurrentTime(current.toFixed(2));
     }
   };
+
   /* */
 
   return (

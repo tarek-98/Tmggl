@@ -21,6 +21,7 @@ import { AiOutlineSound } from "react-icons/ai";
 import { CiVolumeMute } from "react-icons/ci";
 import WebAssetOffIcon from "@mui/icons-material/WebAssetOff";
 import WebIcon from "@mui/icons-material/Web";
+import { fetchSingleVendor } from "../../store/vendorsSlice";
 
 function TrendProducts({
   sound,
@@ -63,6 +64,7 @@ function TrendProducts({
     dispatch(shareProduct(activeProduct._id));
     setAutoPlay(true);
     setScreen(false);
+    dispatch(fetchSingleVendor(activeProduct.idVendor));
   };
 
   const togglePlay = (index) => {
@@ -167,10 +169,6 @@ function TrendProducts({
         {productsStatus === "loading" ? (
           <div className="bg-white text-white w-100 h-100">
             Loading products...
-          </div>
-        ) : productsStatus === "failed" ? (
-          <div className="bg-white text-white w-100 h-100">
-            Error: {products.error}
           </div>
         ) : (
           <Fragment>

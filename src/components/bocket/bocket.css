@@ -6,3 +6,51 @@
   direction: rtl;
   padding: 10px;
 }
+
+.gift-page .container {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.gift-page .form-label {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.gift-page .form-control {
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.gift-page .form-control::placeholder {
+  color: #b3b3b3;
+}
+
+.gift-page .button-submit {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.gift-page .button-submit:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .gift-page .container {
+    padding: 15px;
+  }
+
+  .gift-page .form-group {
+    margin-bottom: 1rem;
+  }
+}

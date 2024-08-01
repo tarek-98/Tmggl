@@ -22,7 +22,12 @@ import "../components/login.css";
 import logo from "../assets/images/logo.jpeg";
 import { loginAsync } from "../store/authSlice";
 import { ToastContainer } from "react-toastify";
-import { fetchSingleVendor, getSingleVendor } from "../store/vendorsSlice";
+import {
+  fetchFollowers,
+  fetchSingleVendor,
+  getAllFollowers,
+  getSingleVendor,
+} from "../store/vendorsSlice";
 
 function ProductsTrend() {
   const [volume, setVolume] = useState(false);
@@ -49,7 +54,7 @@ function ProductsTrend() {
 
   useEffect(() => {
     setLiveImg(null);
-    dispatch(fetchSingleVendor(product.idVendor));
+    dispatch(fetchSingleVendor(product && product.idVendor));
   }, [product]);
 
   useEffect(() => {

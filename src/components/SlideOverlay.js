@@ -23,13 +23,22 @@ import {
   fetchFavoriteProduct,
   getAllFavorites,
 } from "../store/favorite-slice";
-import { fetchVendors, followVendor } from "../store/vendorsSlice";
+import {
+  fetchFollowers,
+  fetchSingleVendor,
+  fetchVendors,
+  followVendor,
+  getAllFollowers,
+  getSingleVendor,
+  selectVendorById,
+} from "../store/vendorsSlice";
 import {
   fetchAsyncProductSingle,
   getSharedProduct,
   shareProduct,
 } from "../store/productSlice";
 import { toast, ToastContainer } from "react-toastify";
+import logo1 from "../assets/images/logo1.png";
 
 function SlideOverlay({
   product,
@@ -51,15 +60,20 @@ function SlideOverlay({
   const userData = userInfo ? userInfo[`Client data`][0] : null;
   const UserId = userData ? userData._id : null;
   const VendorId = product ? product.idVendor : null;
+  const vendorId = VendorId && VendorId;
+
+  const vendordata = useSelector(getSingleVendor);
+  const vendor = useSelector((state) => selectVendorById(state, vendorId));
 
   useEffect(() => {
     if (product) {
       dispatch(fetchAsyncProductSingle(product._id));
+      dispatch(fetchSingleVendor(VendorId));
     }
     if (isAuthenticated) {
       dispatch(fetchFavoriteProduct(UserId));
     }
-  }, [dispatch]);
+  }, []);
 
   // Function to convert likes count to a number
   const parseLikesCount = (count) => {
@@ -81,9 +95,16 @@ function SlideOverlay({
   };
 
   // const isFavorite = favorites.some((fav) => fav.videoId === videoId); for favorite
-  const favorites = useSelector(getAllFavorites); // will be favorites products
+  const favorites = useSelector(getAllFavorites);
+  const followersdata = useSelector(getAllFollowers);
+  const followers = followersdata && followersdata.result;
   const isFavorite = favorites.some((fav) => fav._id === product._id); //test fav
-  const isFollower = favorites.some((follow) => follow._id === product._id); //test follower
+  const isFollower =
+    followers && followers.some((follow) => follow._id === product.idVendor); //test follower
+
+  useEffect(() => {
+    dispatch(fetchFollowers(UserId));
+  }, [followers]);
 
   const handIconClick = () => {
     if (isAuthenticated) {
@@ -159,7 +180,13 @@ function SlideOverlay({
               <Link
                 className="vend-in"
                 to={product && `/vendorpage/${product.idVendor}`}
-              ></Link>
+              >
+                {vendor && vendor.logo ? (
+                  <img src={vendor && vendor.logo} alt="vendorImage" />
+                ) : (
+                  <img src={logo1} alt="vendorImage" />
+                )}
+              </Link>
               <div className="wrapper">
                 <div className="follow-plus" onClick={() => checkLogin()}>
                   <GoPlus

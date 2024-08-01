@@ -19,7 +19,12 @@ import logo from "../assets/images/logo.jpeg";
 import { useNavigate } from "react-router";
 import { loginAsync } from "../store/authSlice";
 import { ToastContainer } from "react-toastify";
-import { fetchSingleVendor, getSingleVendor } from "../store/vendorsSlice";
+import {
+  fetchFollowers,
+  fetchSingleVendor,
+  getAllFollowers,
+  getSingleVendor,
+} from "../store/vendorsSlice";
 import { addToCart } from "../store/cartSlice";
 
 function NewestProducts() {
@@ -47,7 +52,7 @@ function NewestProducts() {
 
   useEffect(() => {
     setLiveImg(null);
-    dispatch(fetchSingleVendor(product.idVendor));
+    dispatch(fetchSingleVendor(product && product.idVendor));
   }, [product]);
 
   useEffect(() => {
