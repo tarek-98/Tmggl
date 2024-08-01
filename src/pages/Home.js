@@ -24,7 +24,6 @@ import {
 } from "../store/vendorsSlice";
 
 function Home() {
-  const [volume, setVolume] = useState(false);
   const [sound, setSound] = useState(true);
   const [comment, setComment] = useState(false);
   const [info, setInfo] = useState(false);
@@ -73,6 +72,7 @@ function Home() {
       [namechoose]: _id,
     }));
   };
+  
   const addToCartHandler = (product) => {
     let productLocation = "الرياض";
     let vendorName = "احمد";

@@ -100,7 +100,8 @@ function SlideOverlay({
   const followers = followersdata && followersdata.result;
   const isFavorite = favorites.some((fav) => fav._id === product._id); //test fav
   const isFollower =
-    followers && followers.some((follow) => follow._id === product.idVendor); //test follower
+    followers &&
+    followers.some((follow) => follow._id === product && product.idVendor); //test follower
 
   useEffect(() => {
     dispatch(fetchFollowers(UserId));

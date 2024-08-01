@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAsyncProductSingle,
   getProductSingle,
+  selectProductById,
 } from "../store/productSlice";
 import SlideOverlay from "../components/SlideOverlay";
 import BottomOption from "../components/BottomOption";
@@ -29,6 +30,7 @@ import {
   fetchSingleVendor,
   getAllFollowers,
   getSingleVendor,
+  selectVendorById,
 } from "../store/vendorsSlice";
 import WebAssetOffIcon from "@mui/icons-material/WebAssetOff";
 import WebIcon from "@mui/icons-material/Web";
@@ -36,8 +38,13 @@ import WebIcon from "@mui/icons-material/Web";
 function ProductSingle() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const productData = useSelector(getProductSingle);
-  const product = productData && productData.product;
+  // const productData = useSelector(getProductSingle);
+  // const product = productData && productData.product;
+  const productId = id;
+  const productData = useSelector((state) =>
+    selectProductById(state, productId)
+  );
+  const product = productData && productData;
   const comments = product ? product.comments : null;
   const [sound, setSound] = useState(true);
   const [comment, setComment] = useState(false);
@@ -57,6 +64,9 @@ function ProductSingle() {
 
   useEffect(() => {
     dispatch(fetchSingleVendor(product && product.idVendor));
+    console.log(productId);
+    console.log(productData);
+    console.log(product);
     setLiveImg(null);
   }, [product]);
 

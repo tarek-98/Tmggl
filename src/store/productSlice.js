@@ -46,6 +46,8 @@ const productSlice = createSlice({
       .addCase(fetchAsyncProductSingle.fulfilled, (state, action) => {
         state.productSingle = action.payload;
         state.productSingleStatus = STATUS.SUCCEEDED;
+        const singleProduct = action.payload.product;
+        state[singleProduct && singleProduct._id] = singleProduct;
       })
 
       .addCase(fetchAsyncProductSingle.rejected, (state, action) => {
@@ -174,4 +176,7 @@ export const getProductSingle = (state) => state.product.productSingle;
 export const getSharedProduct = (state) => state.product.sharedProduct;
 export const getSingleProductStatus = (state) =>
   state.product.productSingleStatus;
+
+export const selectProductById = (state, productId) => state.product[productId];
+
 export default productSlice.reducer;

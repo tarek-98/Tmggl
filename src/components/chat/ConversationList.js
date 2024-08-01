@@ -18,17 +18,19 @@ const ConversationsPage = () => {
 
   return (
     <div className="conversations-page">
-      <h2 className="mb-5">المحادثات</h2>
-      <ul className="conversation-list">
-        {conversations.map((conversation, index) => (
-          <ConversationItem
-            index={index}
-            conversation={conversation}
-            vendorId={conversation && conversation.participants[1]}
-            userId={userId}
-          />
-        ))}
-      </ul>
+      <div className="container">
+        <h2 className="mb-5">المحادثات</h2>
+        <ul className="conversation-list">
+          {conversations.map((conversation, index) => (
+            <ConversationItem
+              index={index}
+              conversation={conversation}
+              vendorId={conversation && conversation.participants[1]}
+              userId={userId}
+            />
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
