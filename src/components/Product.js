@@ -22,6 +22,15 @@ import WebAssetOffIcon from "@mui/icons-material/WebAssetOff";
 import WebIcon from "@mui/icons-material/Web";
 import { fetchSingleVendor } from "../store/vendorsSlice";
 
+function shuffleArray(array) {
+  const shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+}
+
 function Product({
   sound,
   setSound,
@@ -41,6 +50,7 @@ function Product({
   const dispatch = useDispatch();
   const videoRef = useRef(null);
   const [screen, setScreen] = useState(false);
+
   const viewedProducts = useSelector(
     (state) => state.sortedProducts.viewedProducts
   );
@@ -94,15 +104,18 @@ function Product({
   const [currentTime, setCurrentTime] = useState(0);
   const [index, setIndex] = useState(0);
   const videoRefs = useRef([]);
-  const [videoState, setVideoState] = useState(
-    products &&
+  const [videoState, setVideoState] = useState([]);
+  /* */
+  {
+    /*  products &&
       products.map(() => ({
         percentage: 0,
         currentTime: 0,
         duration: 0,
         loading: true, // Initial loading state
-      }))
-  );
+      })) */
+  }
+  /* */
   useEffect(() => {
     videoRefs.current = videoRefs.current.slice(0, products && products.length);
   }, [products && products.length]);
@@ -136,6 +149,25 @@ function Product({
     }
   };
 
+  /* */
+  /*random video */
+  const [shuffledVideos, setShuffledVideos] = useState([]);
+  useEffect(() => {
+    // Shuffle the videos array whenever the component mounts or the videos array changes
+    const shuffled = shuffleArray(products);
+    setShuffledVideos(shuffled);
+    // Initialize video state
+    setVideoState(
+      shuffled.map(() => ({
+        percentage: 0,
+        currentTime: 0,
+        duration: 0,
+        loading: true,
+        muted: true,
+      }))
+    );
+    videoRefs.current = new Array(shuffled.length);
+  }, [products]);
   /* */
 
   return (
@@ -180,7 +212,7 @@ function Product({
           </div>
         ) : (
           <Fragment>
-            {products.map((product, index) => {
+            {shuffledVideos.map((product, index) => {
               return (
                 <Fragment>
                   <SwiperSlide key={product.id}>

@@ -6,6 +6,7 @@ import { Box, Typography } from "@mui/material";
 import { Rating } from "@mui/lab";
 import { Col, Row } from "react-bootstrap";
 import { fetchFollowers, getAllFollowers } from "../../store/vendorsSlice";
+import ReviewName from "./ReviewName";
 
 const ReviewList = ({ vendorId }) => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const ReviewList = ({ vendorId }) => {
               key={index}
               sx={{ mb: 2, p: 2, border: "1px solid #ccc", borderRadius: 2 }}
             >
-              {/*<p>{review.name}</p> */}
+              <ReviewName review={review} />
               <Rating value={review.rating} readOnly />
               <Typography variant="body1">{review.reviewText}</Typography>
             </Box>
