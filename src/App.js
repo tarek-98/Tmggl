@@ -28,6 +28,8 @@ import ProductsTrend from "./pages/ProductsTrend";
 import Chat from "./components/chat/Chat";
 import ConversationsPage from "./components/chat/ConversationList";
 import { useSelector } from "react-redux";
+import RegisterPhone from "./components/login/RegisterPhone";
+import VerifySingupOtp from "./components/login/VerifySingupOtp";
 
 function App() {
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
@@ -48,7 +50,9 @@ function App() {
                 ></Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/verify-otp" element={<VerifyOtp />} />
+                <Route path="/verifySingupOtp" element={<VerifySingupOtp />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/registerPhone" element={<RegisterPhone />} />
                 <Route path="/product/:id" element={<ProductSingle />} />
                 <Route path="/vendorpage/:id" element={<Vendor />} />
                 <Route path="/search" element={<SearchPage />}></Route>

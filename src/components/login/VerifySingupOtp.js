@@ -1,33 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { verifyOTP } from "../../store/authSlice";
+import { verifySignUpOTP } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import OtpInput from "react-otp-input";
 import "./ckeck.css";
 
-const VerifyOtp = () => {
+const VerifySingupOtp = () => {
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { phoneNumber, status, error, userInfo, isAuthenticated } = useSelector(
+  const { phoneNumberRegister, status, error, isRegisterd } = useSelector(
     (state) => state.auth
   );
 
   useEffect(() => {
-    if (isAuthenticated === true) {
-      navigate("/profile");
+    if (isRegisterd === true) {
+      navigate("/register");
     }
-  }, [isAuthenticated]);
+  }, [isRegisterd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      dispatch(verifyOTP({ phoneNumber, otp }));
+      dispatch(verifySignUpOTP({ phoneNumberRegister, otp }));
     } catch (error) {
       console.error("Email verification failed:", error);
     }
-    console.log(error.message);
+    console.log(isRegisterd);
   };
 
   return (
@@ -36,7 +36,7 @@ const VerifyOtp = () => {
         <h3 className="mb-4">قم بتأكيد رقم الجوال</h3>
         <span className="mb-3">
           تم إرسال كلمة المرور المؤقتة إلى <br />
-          {phoneNumber}
+          {phoneNumberRegister}
         </span>
         <form
           onSubmit={handleSubmit}
@@ -56,7 +56,6 @@ const VerifyOtp = () => {
           <button type="submit" className="btn-24">
             <span>تحقق</span>
           </button>
-          
         </form>
       </div>
       <ToastContainer />
@@ -64,4 +63,4 @@ const VerifyOtp = () => {
   );
 };
 
-export default VerifyOtp;
+export default VerifySingupOtp;

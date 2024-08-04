@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import "../components/singleProduct/singleProduct.css";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAsyncProductSingle,
@@ -23,8 +23,8 @@ import Slider from "../components/control/slider/Slider";
 import ControlPanel from "../components/control/controls/ControlPanel";
 import { CiVolumeMute } from "react-icons/ci";
 import { AiOutlineSound } from "react-icons/ai";
-import { loginAsync } from "../store/authSlice";
-import { ToastContainer } from "react-toastify";
+import { loginAsync, sendOTP, setPhoneNumber } from "../store/authSlice";
+import { toast, ToastContainer } from "react-toastify";
 import {
   fetchFollowers,
   fetchSingleVendor,
@@ -34,6 +34,7 @@ import {
 } from "../store/vendorsSlice";
 import WebAssetOffIcon from "@mui/icons-material/WebAssetOff";
 import WebIcon from "@mui/icons-material/Web";
+import { Link } from "react-router-dom";
 
 function ProductSingle() {
   const { id } = useParams();
@@ -63,16 +64,12 @@ function ProductSingle() {
   const [screen, setScreen] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchSingleVendor(product && product.idVendor));
-    console.log(productId);
-    console.log(productData);
-    console.log(product);
-    setLiveImg(null);
-  }, [product]);
-
-  useEffect(() => {
     dispatch(fetchAsyncProductSingle(id));
   }, []);
+  useEffect(() => {
+    dispatch(fetchSingleVendor(product && product.idVendor));
+    setLiveImg(null);
+  }, [product]);
 
   const togglePlay = () => {
     const video = videoRef.current;
@@ -194,11 +191,15 @@ function ProductSingle() {
   }
 
   /*log in popup */
+  /*log in popup */
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [pass, setPass] = useState("");
+  const navigate = useNavigate();
   const { status } = useSelector((state) => state.auth);
 
   const saudiPhoneNumberRegex = /^0[0-9]{9}$/;
+  const lastNineDigits = phone.length === 10 && phone.slice(-9);
 
   useEffect(() => {
     if (status === "logging in succeeded") {
@@ -208,14 +209,23 @@ function ProductSingle() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(status);
-    dispatch(loginAsync({ email, pass }));
+    if (saudiPhoneNumberRegex.test(phone)) {
+      dispatch(setPhoneNumber(phone));
+      dispatch(sendOTP(lastNineDigits));
+      navigate("/verify-otp");
+    } else {
+      toast.error("ادخل رقم جوال صالح", {
+        position: "top-left",
+      });
+    }
   };
 
   const [logInPopup, setLoginPopup] = useState(false);
   const toggleModal = () => {
     setLoginPopup(!logInPopup);
   };
+
+  /* */
 
   /* */
 
@@ -377,7 +387,7 @@ function ProductSingle() {
                 </div>
                 <div className="product-single-r mt-1" dir="rtl">
                   <div className="product-details font-manrope">
-                    <div className="title mb-3">{product.name}</div>
+                    <div className="title mb-3">{product && product.name}</div>
                     <div className="product loc">
                       <span>يشحن من </span>
                       <span className=" text-danger">
@@ -517,34 +527,30 @@ function ProductSingle() {
                           >
                             <input
                               className="mb-2"
-                              type="email"
-                              value={email}
-                              onChange={(e) => setEmail(e.target.value)}
+                              type="text"
+                              value={phone}
+                              onChange={(e) => setPhone(e.target.value)}
                               placeholder="مثال 0512345678"
                               required
-                              // maxLength="10"
-                              // minLength="10"
+                              maxLength="10"
+                              minLength="10"
                               name="phone"
-                            />
-                            <input
-                              className="mb-2"
-                              type="password"
-                              value={pass}
-                              onChange={(e) => setPass(e.target.value)}
-                              // placeholder="مثال 0512345678"
-                              required
-                              // maxLength="10"
-                              // minLength="10"
-                              name="pass"
                             />
                             <button type="submit" className="mb-2" value="">
                               تسجيل الدخول
                             </button>
+                            <Link
+                              className="mb-2 bg-danger"
+                              to="/registerPhone"
+                            >
+                              انشاء حساب
+                            </Link>
                           </form>
                         </div>
                       </div>
                     </div>
                   </div>
+                  <ToastContainer />
                 </div>
               </div>
             </div>

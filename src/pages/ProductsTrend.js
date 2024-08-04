@@ -20,14 +20,16 @@ import { addToCart } from "../store/cartSlice";
 import TrendProducts from "../components/products/TrendProducts";
 import "../components/login.css";
 import logo from "../assets/images/logo.jpeg";
-import { loginAsync } from "../store/authSlice";
-import { ToastContainer } from "react-toastify";
+import { loginAsync, sendOTP, setPhoneNumber } from "../store/authSlice";
+import { toast, ToastContainer } from "react-toastify";
 import {
   fetchFollowers,
   fetchSingleVendor,
   getAllFollowers,
   getSingleVendor,
 } from "../store/vendorsSlice";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 function ProductsTrend() {
   const [volume, setVolume] = useState(false);
@@ -139,11 +141,15 @@ function ProductsTrend() {
   }
 
   /*log in popup */
+  /*log in popup */
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [pass, setPass] = useState("");
+  const navigate = useNavigate();
   const { status } = useSelector((state) => state.auth);
 
   const saudiPhoneNumberRegex = /^0[0-9]{9}$/;
+  const lastNineDigits = phone.length === 10 && phone.slice(-9);
 
   useEffect(() => {
     if (status === "logging in succeeded") {
@@ -153,8 +159,15 @@ function ProductsTrend() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(status);
-    dispatch(loginAsync({ email, pass }));
+    if (saudiPhoneNumberRegex.test(phone)) {
+      dispatch(setPhoneNumber(phone));
+      dispatch(sendOTP(lastNineDigits));
+      navigate("/verify-otp");
+    } else {
+      toast.error("ادخل رقم جوال صالح", {
+        position: "top-left",
+      });
+    }
   };
 
   const [logInPopup, setLoginPopup] = useState(false);
@@ -409,34 +422,30 @@ function ProductsTrend() {
                           >
                             <input
                               className="mb-2"
-                              type="email"
-                              value={email}
-                              onChange={(e) => setEmail(e.target.value)}
+                              type="text"
+                              value={phone}
+                              onChange={(e) => setPhone(e.target.value)}
                               placeholder="مثال 0512345678"
                               required
-                              // maxLength="10"
-                              // minLength="10"
+                              maxLength="10"
+                              minLength="10"
                               name="phone"
-                            />
-                            <input
-                              className="mb-2"
-                              type="password"
-                              value={pass}
-                              onChange={(e) => setPass(e.target.value)}
-                              // placeholder="مثال 0512345678"
-                              required
-                              // maxLength="10"
-                              // minLength="10"
-                              name="pass"
                             />
                             <button type="submit" className="mb-2" value="">
                               تسجيل الدخول
                             </button>
+                            <Link
+                              className="mb-2 bg-danger"
+                              to="/registerPhone"
+                            >
+                              انشاء حساب
+                            </Link>
                           </form>
                         </div>
                       </div>
                     </div>
                   </div>
+                  <ToastContainer />
                 </div>
               </div>
             </div>

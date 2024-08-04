@@ -122,7 +122,7 @@ function SlideOverlay({
       dispatch(fetchFavoriteProduct(UserId));
     } else if (isAuthenticated) {
       setIsFavoriteIcon(true);
-      dispatch(addToFavorite({ productId, UserId }));
+      dispatch(addToFavorite({ vendorId, productId, UserId }));
       dispatch(fetchFavoriteProduct(UserId));
     }
     // else if (isAuthenticated === false) {

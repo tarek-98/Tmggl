@@ -44,6 +44,8 @@ function Vendor() {
   const vendor = useSelector((state) => selectVendorById(state, vendorId));
   const { productsStatus } = useSelector((state) => state.product);
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
+  const { reviews, loading, error } = useSelector((state) => state.reviews);
+  const reviewsData = reviews ? reviews.data : null;
   const data = useSelector(getProductsByVendor);
   const products = data && data.data;
   const [toggleNav, setToggleNav] = useState(0);
@@ -111,6 +113,10 @@ function Vendor() {
               <div className="vendor-loc fw-bold">
                 <span>مقر البائع : </span>
                 <span>{vendor && vendor.vendorLocation}</span>
+              </div>
+              <div className="fw-bold">
+                <span> متوسط تقييم التاجر : </span>
+                <span>{reviewsData && reviewsData.averageRating}</span>
               </div>
             </div>
           </Col>

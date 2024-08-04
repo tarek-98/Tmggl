@@ -26,14 +26,17 @@ export const fetchFavoriteProduct = createAsyncThunk(
 
 export const addToFavorite = createAsyncThunk(
   "favorite/addToFavorite",
-  async ({ productId, UserId }) => {
-    fetch(`${API_URL}/client/add-favourite-product/${productId}/${UserId}`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `${Authorization}`,
-        "Content-Type": "application/json",
-      },
-    })
+  async ({ vendorId, productId, UserId }) => {
+    fetch(
+      `${API_URL}/client/add-favourite-product/${vendorId}/${productId}/${UserId}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `${Authorization}`,
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log("add to fav");

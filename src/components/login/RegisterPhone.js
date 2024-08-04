@@ -1,32 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { sendOTP, setPhoneNumber } from "../../store/authSlice";
+import {
+  sendOTP,
+  setIsRegisterd,
+  setPhoneNumber,
+  setPhoneNumberRegister,
+} from "../../store/authSlice";
 import { useNavigate } from "react-router";
 import "./login.css";
 import logo from "../../assets/images/logo.jpeg";
 import { ToastContainer, toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
-const Login = () => {
+const RegisterPhone = () => {
   const [phone, setPhone] = useState("");
-  const [pass, setPass] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status, error, isRegisterd } = useSelector((state) => state.auth);
+  const { status, error } = useSelector((state) => state.auth);
 
   const saudiPhoneNumberRegex = /^0[0-9]{9}$/;
   const lastNineDigits = phone.length === 10 && phone.slice(-9);
 
   useEffect(() => {
+    dispatch(setIsRegisterd(false));
     console.log(lastNineDigits);
-  }, []);
+  }, [phone]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(status);
     if (saudiPhoneNumberRegex.test(phone)) {
-      dispatch(setPhoneNumber(phone));
+      dispatch(setPhoneNumberRegister(phone));
       dispatch(sendOTP(lastNineDigits));
-      navigate("/verify-otp");
+      navigate("/verifySingupOtp");
     } else {
       toast.error("ادخل رقم جوال صالح", {
         position: "top-left",
@@ -40,15 +46,11 @@ const Login = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="logo mb-3">
-              <img
-                src={logo}
-                alt=""
-                className="w-100"
-                onClick={() => console.log(isRegisterd)}
-              />
+              <img src={logo} alt="" className="w-100" />
             </div>
-            <h2 className="mb-3">اهلا عزيزي مستخدم تمقل</h2>
-            <div className="form">
+            <h2 className="mb-1">اهلا عزيزي مستخدم تمقل</h2>
+            <span>قم بادخال رقم الجوال</span>
+            <div className="form mt-3">
               <form onSubmit={handleSubmit} className=" d-flex flex-column">
                 <input
                   className="mb-2"
@@ -62,11 +64,8 @@ const Login = () => {
                   name="phone"
                 />
                 <button type="submit" className="mb-2" value="">
-                  تسجيل الدخول
+                  تأكيد الجوال
                 </button>
-                <Link className="mb-2 bg-danger" to="/registerPhone">
-                  انشاء حساب
-                </Link>
               </form>
             </div>
           </div>
@@ -77,4 +76,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default RegisterPhone;

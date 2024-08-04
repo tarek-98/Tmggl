@@ -2,30 +2,58 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const API_URL = "https://tager-dpsl.onrender.com";
+const Authorization = localStorage.getItem("token");
 
 // Thunks for sending OTP and verifying OTP
-export const sendOTP = createAsyncThunk("auth/sendOTP", async (phoneNumber) => {
-  const response = await fetch(`${API_URL}/send-otp`, {
+export const sendOTP = createAsyncThunk("auth/sendOTP", async (PhoneNumber) => {
+  const response = await fetch(`${API_URL}/client/send-otp-phone`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ phoneNumber }),
+    body: JSON.stringify({ PhoneNumber }),
   });
   return response.json();
 });
 
+// Async thunk to verify login code
 export const verifyOTP = createAsyncThunk(
   "auth/verifyOTP",
-  async ({ phoneNumber, otp }) => {
-    const response = await fetch(`${API_URL}/verify-otp`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ phoneNumber, otp }),
-    });
-    return response.json();
+  async ({ phoneNumber, otp }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${API_URL}/client/login-Phone-validate-code/${otp}`,
+        {
+          body: {
+            PhoneNumber: phoneNumber,
+          },
+        }
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+// Async thunk to verify singup code
+export const verifySignUpOTP = createAsyncThunk(
+  "auth/verifySignUpOTP",
+  async ({ phoneNumberRegister, otp }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        `${API_URL}/client/signup-Phone-validate-code/${otp}`,
+        {
+          body: {
+            PhoneNumber: phoneNumberRegister,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
@@ -44,6 +72,7 @@ export const loginAsync = createAsyncThunk(
     }
   }
 );
+
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (userData, { rejectWithValue }) => {
@@ -60,7 +89,7 @@ export const registerUser = createAsyncThunk(
   }
 );
 // Async thunk for user login
-const Authorization = localStorage.getItem("token");
+
 export const logOutAsync = createAsyncThunk("auth/logOutAsync", async () => {
   // Example of access request and obtaining token
   fetch(`${API_URL}/client/logout`, {
@@ -81,23 +110,31 @@ const authSlice = createSlice({
   name: "auth",
   initialState: {
     phoneNumber: "",
+    phoneNumberRegister: "",
     otp: "",
     status: "idle",
     error: null,
     isNewUser: false,
     userInfo: null,
     token: localStorage.getItem("token") || null,
+    isRegisterd: false,
     isAuthenticated: false,
   },
   reducers: {
     setPhoneNumber: (state, action) => {
       state.phoneNumber = action.payload;
     },
+    setPhoneNumberRegister: (state, action) => {
+      state.phoneNumberRegister = action.payload;
+    },
     setOtp: (state, action) => {
       state.otp = action.payload;
     },
     setIsAuthenticated: (state, action) => {
       state.isAuthenticated = action.payload;
+    },
+    setIsRegisterd: (state, action) => {
+      state.isRegisterd = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -112,17 +149,29 @@ const authSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       })
+      .addCase(verifySignUpOTP.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(verifySignUpOTP.fulfilled, (state, action) => {
+        state.status = "otpSucceeded";
+        state.isRegisterd = true;
+      })
+      .addCase(verifySignUpOTP.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
       .addCase(verifyOTP.pending, (state) => {
         state.status = "loading";
       })
       .addCase(verifyOTP.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = "otpSucceeded";
+        state.isAuthenticated = true;
         state.isNewUser = action.payload.isNewUser;
         state.userInfo = action.payload.userInfo;
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action.error;
       })
       .addCase(loginAsync.pending, (state) => {
         state.status = "loading";
@@ -155,7 +204,7 @@ const authSlice = createSlice({
         state.status = "loading";
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = "register succeeded";
         state.isAuthenticated = true;
         state.userInfo = action.payload;
         state.token = action.payload.JWT;
@@ -168,6 +217,13 @@ const authSlice = createSlice({
 });
 
 export const isAuthenticated = (state) => state.auth.isAuthenticated;
-export const { setPhone, setOtp, setIsAuthenticated } = authSlice.actions;
+export const {
+  setPhone,
+  setOtp,
+  setIsAuthenticated,
+  setPhoneNumber,
+  setPhoneNumberRegister,
+  setIsRegisterd,
+} = authSlice.actions;
 
 export default authSlice.reducer;

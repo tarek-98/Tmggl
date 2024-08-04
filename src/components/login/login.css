@@ -102,3 +102,15 @@
 .logIn-main .email-login a {
   color: black;
 }
+
+.logIn-main a {
+  border: 1px solid white;
+  color: white;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
