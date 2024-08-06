@@ -422,10 +422,7 @@ function Home() {
                             <button type="submit" className="mb-2" value="">
                               تسجيل الدخول
                             </button>
-                            <Link
-                              className="mb-2 bg-danger"
-                              to="/registerPhone"
-                            >
+                            <Link className="mb-2 bg-danger" to="/register">
                               انشاء حساب
                             </Link>
                           </form>

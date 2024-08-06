@@ -40,12 +40,19 @@ export const verifyOTP = createAsyncThunk(
 // Async thunk to verify singup code
 export const verifySignUpOTP = createAsyncThunk(
   "auth/verifySignUpOTP",
-  async ({ phoneNumberRegister, otp }, { rejectWithValue }) => {
+  async (
+    { phoneNumberRegister, otp, email, firstName, lastName },
+    { rejectWithValue }
+  ) => {
     try {
       const response = await axios.post(
         `${API_URL}/client/signup-Phone-validate-code/${otp}`,
         {
           body: {
+            Email: email,
+            Password: "123",
+            FirstName: firstName,
+            LastName: lastName,
             PhoneNumber: phoneNumberRegister,
           },
         }
@@ -110,6 +117,9 @@ const authSlice = createSlice({
   name: "auth",
   initialState: {
     phoneNumber: "",
+    email: "",
+    firstName: "",
+    lastName: "",
     phoneNumberRegister: "",
     otp: "",
     status: "idle",
@@ -123,6 +133,15 @@ const authSlice = createSlice({
   reducers: {
     setPhoneNumber: (state, action) => {
       state.phoneNumber = action.payload;
+    },
+    setEmailRegister: (state, action) => {
+      state.email = action.payload;
+    },
+    setFirstNameRegister: (state, action) => {
+      state.firstName = action.payload;
+    },
+    setLastNameRegister: (state, action) => {
+      state.lastName = action.payload;
     },
     setPhoneNumberRegister: (state, action) => {
       state.phoneNumberRegister = action.payload;
@@ -155,6 +174,8 @@ const authSlice = createSlice({
       .addCase(verifySignUpOTP.fulfilled, (state, action) => {
         state.status = "otpSucceeded";
         state.isRegisterd = true;
+        state.isAuthenticated = true;
+        state.userInfo = action.payload;
       })
       .addCase(verifySignUpOTP.rejected, (state, action) => {
         state.status = "failed";
@@ -167,7 +188,7 @@ const authSlice = createSlice({
         state.status = "otpSucceeded";
         state.isAuthenticated = true;
         state.isNewUser = action.payload.isNewUser;
-        state.userInfo = action.payload.userInfo;
+        state.userInfo = action.payload;
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.status = "failed";
@@ -219,6 +240,9 @@ const authSlice = createSlice({
 export const isAuthenticated = (state) => state.auth.isAuthenticated;
 export const {
   setPhone,
+  setEmailRegister,
+  setFirstNameRegister,
+  setLastNameRegister,
   setOtp,
   setIsAuthenticated,
   setPhoneNumber,

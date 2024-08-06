@@ -10,7 +10,6 @@ import { useNavigate } from "react-router";
 import "./login.css";
 import logo from "../../assets/images/logo.jpeg";
 import { ToastContainer, toast } from "react-toastify";
-import { Link } from "react-router-dom";
 
 const RegisterPhone = () => {
   const [phone, setPhone] = useState("");

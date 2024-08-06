@@ -434,7 +434,7 @@ function NewestProducts() {
                             </button>
                             <Link
                               className="mb-2 bg-danger"
-                              to="/registerPhone"
+                              to="/register"
                             >
                               انشاء حساب
                             </Link>

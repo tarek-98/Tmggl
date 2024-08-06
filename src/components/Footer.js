@@ -21,6 +21,10 @@ function Footer() {
 
   const [toggle, setToggle] = useState(0);
 
+  function refreshPage() {
+    window.location.reload();
+  }
+
   return (
     <div className="footer">
       <div>

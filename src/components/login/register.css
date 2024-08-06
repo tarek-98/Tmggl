@@ -65,3 +65,11 @@
     padding: 20px;
   }
 }
+
+@media (min-width: 768px) {
+  .form-container .form-control {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

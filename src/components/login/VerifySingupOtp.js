@@ -10,20 +10,28 @@ const VerifySingupOtp = () => {
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { phoneNumberRegister, status, error, isRegisterd } = useSelector(
-    (state) => state.auth
-  );
+  const { phoneNumberRegister, isRegisterd, email, firstName, lastName } =
+    useSelector((state) => state.auth);
 
   useEffect(() => {
     if (isRegisterd === true) {
-      navigate("/register");
+      navigate("/profile");
     }
   }, [isRegisterd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      dispatch(verifySignUpOTP({ phoneNumberRegister, otp }));
+      dispatch(
+        verifySignUpOTP({
+          phoneNumberRegister,
+          otp,
+          email,
+          firstName,
+          lastName,
+        })
+      );
+      console.log(email, firstName, lastName);
     } catch (error) {
       console.error("Email verification failed:", error);
     }

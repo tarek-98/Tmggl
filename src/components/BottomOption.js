@@ -6,6 +6,7 @@ import { MdLocalShipping } from "react-icons/md";
 import { fetchShippingMethods } from "../store/shippingSlice";
 import { Button } from "@mui/material";
 import { fetchAsyncProductSingle } from "../store/productSlice";
+import WarrantyIcon from "./WarrantyIcon";
 
 function BottomOption({ product, addProduct, setAddProduct, setSocial }) {
   const dispatch = useDispatch();
@@ -35,14 +36,6 @@ function BottomOption({ product, addProduct, setAddProduct, setSocial }) {
         </Button>
         <div className="price">
           <div className="new-price me-4">
-            {/*<div className=" d-flex flex-column justify-content-center align-items-center">
-              <MdLocalShipping className="fs-2" />
-              {enabledMethods.price === "0" ? (
-                <span className="free-shipping-text">شحن مجاني</span>
-              ) : (
-                ""
-              )}
-            </div> */}
             <div>
               <span className="ms-1">
                 {product && product.price + product.price * 0.15}
