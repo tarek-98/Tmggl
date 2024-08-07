@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addComment } from "../../store/commentSlice";
+import { fetchAsyncProductSingle } from "../../store/productSlice";
 
 const AddComment = ({ product, alertLogin, setLoginPopup, logInPopup }) => {
   const [comment, setComment] = useState("");
@@ -16,6 +17,9 @@ const AddComment = ({ product, alertLogin, setLoginPopup, logInPopup }) => {
     if (comment && isAuthenticated) {
       dispatch(addComment({ productId, client, comment }));
       setComment("");
+      setTimeout(() => {
+        dispatch(fetchAsyncProductSingle(product && product._id));
+      }, 1000);
     } else {
       checkLogin();
     }

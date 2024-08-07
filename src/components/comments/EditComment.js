@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { editComment } from "../../store/commentSlice";
+import { fetchAsyncProductSingle } from "../../store/productSlice";
 
 const EditComment = ({ comment, setEditMode, product }) => {
   const [newCommentText, setNewCommentText] = useState(comment.comment);
@@ -14,6 +15,9 @@ const EditComment = ({ comment, setEditMode, product }) => {
     if (newCommentText) {
       dispatch(editComment({ productId, commentId, newCommentText }));
       setEditMode(null);
+      setTimeout(() => {
+        dispatch(fetchAsyncProductSingle(product && product._id));
+      }, 1000);
     }
   };
 

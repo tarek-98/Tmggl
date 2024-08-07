@@ -15,7 +15,7 @@ function ReviewName({ review }) {
 
   return (
     <div>
-      <p>
+      <p className="mb-0">
         {user && user.FirstName} {user && user.LastName}
       </p>
     </div>

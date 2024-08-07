@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import "./footer.css";
 import { Link } from "react-router-dom";
 import { FaHome, FaWindowRestore } from "react-icons/fa";
@@ -45,7 +45,10 @@ function Footer() {
             <Link
               to={isAuthenticated ? "/inbox" : "/login"}
               className="tab-link"
-              onClick={() => setToggle(1)}
+              onClick={() => {
+                setToggle(1);
+                console.log(isAuthenticated);
+              }}
             >
               <MdOutlineMoveToInbox className="tab-icon" />
               <span

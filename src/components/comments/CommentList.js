@@ -7,6 +7,7 @@ import AddComment from "./AddComment";
 import EditComment from "./EditComment";
 import AddReply from "./AddReply";
 import { FaUser } from "react-icons/fa";
+import { fetchAsyncProductSingle } from "../../store/productSlice";
 
 const Comments = ({ product, alertLogin, setLoginPopup, logInPopup }) => {
   const dispatch = useDispatch();
@@ -68,14 +69,17 @@ const Comments = ({ product, alertLogin, setLoginPopup, logInPopup }) => {
 
             {user === comment.client && (
               <span
-                onClick={() =>
+                onClick={() => {
                   dispatch(
                     deleteComment({
                       productId: product._id,
                       commentId: comment._id,
                     })
-                  )
-                }
+                  );
+                  setTimeout(() => {
+                    dispatch(fetchAsyncProductSingle(product && product._id));
+                  }, 1000);
+                }}
                 className="text-black-50"
               >
                 حذف
@@ -91,10 +95,10 @@ const Comments = ({ product, alertLogin, setLoginPopup, logInPopup }) => {
                   <div className="d-flex align-items-center gap-2">
                     <FaUser className="fs-4" />
                     <span className="text-black-50">
-                      {product.idVendor === comment.client && (
-                        <span className="text-danger me-2">Creator</span>
-                      )}
                       userName
+                      {product.idVendor === comment.client && (
+                        <span className="text-danger me-2">التاجر</span>
+                      )}
                     </span>
                   </div>
                   <div className="comment-text mb-0">{reply.reply}</div>
@@ -112,15 +116,20 @@ const Comments = ({ product, alertLogin, setLoginPopup, logInPopup }) => {
 
                       {user === reply.user && (
                         <span
-                          onClick={() =>
+                          onClick={() => {
                             dispatch(
                               delReply({
                                 productId: product._id,
                                 commentId: comment._id,
                                 replyId: reply._id,
                               })
-                            )
-                          }
+                            );
+                            setTimeout(() => {
+                              dispatch(
+                                fetchAsyncProductSingle(product && product._id)
+                              );
+                            }, 1000);
+                          }}
                           className="text-black-50"
                         >
                           حذف

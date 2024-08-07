@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addReply } from "../../store/commentSlice";
+import { fetchAsyncProductSingle } from "../../store/productSlice";
 
 const AddReply = ({ commentId, setReplyMode, product }) => {
   const [reply, setReply] = useState("");
@@ -16,6 +17,9 @@ const AddReply = ({ commentId, setReplyMode, product }) => {
       dispatch(addReply({ productId, commentId, user, reply }));
       setReplyMode(null);
       setReply("");
+      setTimeout(() => {
+        dispatch(fetchAsyncProductSingle(product && product._id));
+      }, 1000);
     }
   };
 

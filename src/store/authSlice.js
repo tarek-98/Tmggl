@@ -213,7 +213,7 @@ const authSlice = createSlice({
       })
       .addCase(logOutAsync.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.isAuthenticated = false;
+        // state.isAuthenticated = false;
         state.userInfo = null;
         state.token = null;
       })
