@@ -57,7 +57,7 @@ function SlideOverlay({
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
   const sharedProduct = useSelector(getSharedProduct);
   const productId = product ? product._id : null;
-  const userData = userInfo ? userInfo[`Client data`][0] : null;
+  const userData = userInfo ? userInfo.data : null;
   const UserId = userData ? userData._id : null;
   const VendorId = product ? product.idVendor : null;
   const vendorId = VendorId && VendorId;
@@ -100,8 +100,7 @@ function SlideOverlay({
   const followers = followersdata && followersdata.result;
   const isFavorite = favorites.some((fav) => fav._id === product._id); //test fav
   const isFollower =
-    followers &&
-    followers.some((follow) => follow._id === product && product.idVendor); //test follower
+    followers && followers.some((follow) => follow._id === product.idVendor); //test follower
 
   useEffect(() => {
     dispatch(fetchFollowers(UserId));

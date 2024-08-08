@@ -82,13 +82,26 @@ export const loginAsync = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
-  async (userData, { rejectWithValue }) => {
+  async (
+    { Email, FirstName, LastName, PhoneNumber, Password },
+    { rejectWithValue }
+  ) => {
     try {
-      const response = await axios.post(`${API_URL}/client/sign-up`, userData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+      const response = await axios.post(
+        `${API_URL}/client/sign-up`,
+        {
+          Email,
+          FirstName,
+          LastName,
+          PhoneNumber,
+          Password,
         },
-      });
+        {
+          headers: {
+            // "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -174,8 +187,6 @@ const authSlice = createSlice({
       .addCase(verifySignUpOTP.fulfilled, (state, action) => {
         state.status = "otpSucceeded";
         state.isRegisterd = true;
-        state.isAuthenticated = true;
-        state.userInfo = action.payload;
       })
       .addCase(verifySignUpOTP.rejected, (state, action) => {
         state.status = "failed";
@@ -189,6 +200,7 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
         state.isNewUser = action.payload.isNewUser;
         state.userInfo = action.payload;
+        localStorage.setItem("token", action.payload.token);
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.status = "failed";
@@ -201,8 +213,8 @@ const authSlice = createSlice({
         state.status = "logging in succeeded";
         state.isAuthenticated = true;
         state.userInfo = action.payload;
-        state.token = action.payload.JWT;
-        localStorage.setItem("token", action.payload.JWT);
+        state.token = action.payload.token;
+        localStorage.setItem("token", action.payload.token);
       })
       .addCase(loginAsync.rejected, (state, action) => {
         state.status = "failed";
@@ -213,7 +225,7 @@ const authSlice = createSlice({
       })
       .addCase(logOutAsync.fulfilled, (state, action) => {
         state.status = "succeeded";
-        // state.isAuthenticated = false;
+        state.isAuthenticated = false;
         state.userInfo = null;
         state.token = null;
       })
@@ -228,7 +240,8 @@ const authSlice = createSlice({
         state.status = "register succeeded";
         state.isAuthenticated = true;
         state.userInfo = action.payload;
-        state.token = action.payload.JWT;
+        state.token = action.payload.token;
+        localStorage.setItem("token", action.payload.token);
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.status = "failed";

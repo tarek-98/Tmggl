@@ -36,7 +36,7 @@ function UserProfile({ socket }) {
     setIsOpen(!isOpen);
   };
 
-  const userData = userInfo ? userInfo[`Client data`][0] : null;
+  const userData = userInfo ? userInfo.data : null;
   const UserId = userData ? userData._id : null;
 
   const renderPage = () => {

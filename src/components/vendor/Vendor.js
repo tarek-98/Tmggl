@@ -69,7 +69,7 @@ function Vendor() {
   const followersdata = useSelector(getAllFollowers);
   const followers = followersdata && followersdata.result;
   const isFollower = followers && followers.some((follow) => follow._id === id); //test follower
-  const userData = userInfo ? userInfo[`Client data`][0] : null;
+  const userData = userInfo ? userInfo.data : null;
   const UserId = userData ? userData._id : null;
   function handleFollowVendor() {
     if (!isAuthenticated) {

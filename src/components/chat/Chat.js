@@ -18,7 +18,7 @@ const Chat = () => {
   const conversations = useSelector(selectConversations);
   const dispatch = useDispatch();
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
-  const userData = userInfo && userInfo[`Client data`][0];
+  const userData = userInfo && userInfo.data;
   const { conversationId } = useParams();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);

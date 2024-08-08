@@ -7,7 +7,7 @@ const AddComment = ({ product, alertLogin, setLoginPopup, logInPopup }) => {
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
   const { userInfo, isAuthenticated } = useSelector((state) => state.auth);
-  const userData = userInfo ? userInfo[`Client data`][0] : null;
+  const userData = userInfo ? userInfo.data : null;
   const client = userData ? userData._id : null;
   const productId = product._id;
 

@@ -64,7 +64,7 @@ const Login = () => {
                 <button type="submit" className="mb-2" value="">
                   تسجيل الدخول
                 </button>
-                <Link className="mb-2 bg-danger" to="/register">
+                <Link className="mb-2 bg-danger" to="/register-phone">
                   انشاء حساب
                 </Link>
               </form>

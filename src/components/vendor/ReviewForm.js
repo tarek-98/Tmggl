@@ -9,7 +9,7 @@ import { toast, ToastContainer } from "react-toastify";
 const ReviewForm = ({ vendorId }) => {
   const [rating, setRating] = useState(0);
   const { userInfo, isAuthenticated } = useSelector((state) => state.auth);
-  const userData = userInfo ? userInfo[`Client data`][0] : null;
+  const userData = userInfo ? userInfo.data : null;
   const userId = userData ? userData._id : null;
   const [reviewText, setReviewText] = useState("");
   const dispatch = useDispatch();

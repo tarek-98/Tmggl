@@ -11,7 +11,7 @@ function Following() {
   const followers = followersdata && followersdata.result;
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
-  const userData = userInfo[`Client data`][0];
+  const userData = userInfo.data;
   const userId = userData._id;
   useEffect(() => {
     dispatch(fetchFollowers(userId));

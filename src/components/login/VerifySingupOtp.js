@@ -15,7 +15,7 @@ const VerifySingupOtp = () => {
 
   useEffect(() => {
     if (isRegisterd === true) {
-      navigate("/profile");
+      navigate("/register");
     }
   }, [isRegisterd]);
 

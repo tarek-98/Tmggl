@@ -9,23 +9,13 @@ import "../components/cart.css";
 const CartPage = () => {
   const dispatch = useDispatch();
   const carts = useSelector(getAllCarts);
-  const { userInfo } = useSelector((state) => state.auth);
-
-  // useEffect(() => {
-  //   console.log(userInfo.ClientID);
-  // }, []);
 
   useEffect(() => {
     document.title = "تمقل - سلة مشترياتي";
   }, []);
 
   const CArtTotlaPrice = carts.reduce((acc, product) => {
-    acc += product.discountedPrice * product.quantity;
-    return acc;
-  }, 0);
-
-  const CartWeight = carts.reduce((acc, product) => {
-    acc += product.productWeight * product.quantity;
+    acc += product.price * product.quantity;
     return acc;
   }, 0);
 
@@ -35,18 +25,14 @@ const CartPage = () => {
         acc[item.vendorName] = { items: [], total: 0 };
       }
       acc[item.vendorName].items.push(item);
-      acc[item.vendorName].total += item.quantity * item.discountedPrice;
+      acc[item.vendorName].total += item.quantity * item.price;
       return acc;
     }, {});
   };
   const groupedItems = groupByVendor(carts);
 
-  const img_url =
-    "https://gomla-wbs.el-programmer.com/storage/app/public/product";
-
   const VAT = CArtTotlaPrice * (15 / 100);
   const Total = CArtTotlaPrice + VAT;
-  const Weight = CartWeight; //dynamic
 
   if (carts.length === 0) {
     return (
@@ -87,7 +73,11 @@ const CartPage = () => {
                       </h4>
                     </div>
                     {groupedItems[vendor].items.map((cart, idx) => (
-                      <div className="cart-ctr fw-6" key={idx} id={cart.id}>
+                      <div
+                        className="cart-ctr fw-6"
+                        key={idx}
+                        id={cart.productId}
+                      >
                         <div
                           className="del-product mb-2"
                           onClick={() => dispatch(removeFromCart(cart.id))}
@@ -97,12 +87,9 @@ const CartPage = () => {
                         <div className="cart-content d-flex">
                           <Link
                             className="cart-product-img"
-                            to={`/product/${cart.id}`}
+                            to={`/product/${cart.productId}`}
                           >
-                            <img
-                              src={`${img_url}/${cart.productColor}`}
-                              alt={cart.name}
-                            />
+                            <img src={cart.image} alt={cart.name} />
                           </Link>
                           <div className="cart-product-info">
                             <div className="cart-product-name">{cart.name}</div>
@@ -114,14 +101,13 @@ const CartPage = () => {
                             </div>
                             <div className="cart-product-size d-flex">
                               <div className="size-text mb-1 ms-2">
-                                المقاس :
+                                {cart.nameOfChoice}
                               </div>
-                              <span className="mb-0">{cart.size}</span>
+                              <span className="mb-0">{cart.typeOfChoice}</span>
                             </div>
                             <div className="cart-product-price mb-2">
                               <span className="cart-ctxt">
-                                {cart.discountedPrice +
-                                  cart.discountedPrice * 0.15}
+                                {cart.price + cart.price * 0.15}
                                 ر.س
                               </span>
                             </div>
@@ -165,7 +151,7 @@ const CartPage = () => {
                             <div className="cart-product-total d-flex justify-content-end ps-2">
                               <span className="cart-ctxt ms-2">المجموع</span>
                               <span className="cart-ctxt text-orange">
-                                {cart.totalPrice + cart.totalPrice * 0.15} ر.س
+                                {Total} ر.س
                               </span>
                             </div>
                           </div>
@@ -200,15 +186,6 @@ const CartPage = () => {
               </div>
               <div className="cart-cfoot d-flex col-lg-12 me-auto ms-3">
                 <div className="cart-cfoot-l mb-3 d-flex justify-content-between">
-                  {/*<button
-                    type="button"
-                    className="clear-cart-btn text-uppercase me-3"
-                    onClick={() => {
-                      sweetAlertDel();
-                    }}
-                  >
-                    <span className="mx-1">حذف العربة</span>
-                  </button>*/}
                   <Link
                     to="/checkout"
                     type="button"

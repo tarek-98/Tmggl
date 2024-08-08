@@ -22,7 +22,7 @@ function EditInfo() {
   });
 
   const { userInfo } = useSelector((state) => state.auth);
-  const userInformation = userInfo && userInfo[`Client data`][0];
+  const userInformation = userInfo && userInfo.data;
   const id = userInformation && userInformation._id;
   const dispatch = useDispatch();
   useEffect(() => {

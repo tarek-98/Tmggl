@@ -29,6 +29,7 @@ import Chat from "./components/chat/Chat";
 import ConversationsPage from "./components/chat/ConversationList";
 import { useSelector } from "react-redux";
 import VerifySingupOtp from "./components/login/VerifySingupOtp";
+import RegisterPhone from "./components/login/RegisterPhone";
 
 function App() {
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
@@ -50,6 +51,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/verify-otp" element={<VerifyOtp />} />
                 <Route path="/verifySingupOtp" element={<VerifySingupOtp />} />
+                <Route path="/register-phone" element={<RegisterPhone />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/product/:id" element={<ProductSingle />} />
                 <Route path="/vendorpage/:id" element={<Vendor />} />

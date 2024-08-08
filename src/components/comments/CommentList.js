@@ -17,7 +17,7 @@ const Comments = ({ product, alertLogin, setLoginPopup, logInPopup }) => {
   const comments = product.comments;
 
   const { userInfo } = useSelector((state) => state.auth);
-  const userData = userInfo ? userInfo[`Client data`][0] : null;
+  const userData = userInfo ? userInfo.data : null;
   const user = userData ? userData._id : null;
 
   useEffect(() => {

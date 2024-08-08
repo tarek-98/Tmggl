@@ -37,7 +37,7 @@ function Home() {
   const [livePrice, setLivePrice] = useState(null);
   const [liveImg, setLiveImg] = useState(null);
   const { userInfo } = useSelector((state) => state.auth);
-  const userData = userInfo ? userInfo[`Client data`][0] : null;
+  const userData = userInfo ? userInfo.data : null;
   const UserId = userData ? userData._id : null;
   const dispatch = useDispatch();
 
@@ -74,16 +74,25 @@ function Home() {
     }));
   };
 
+  const [choiseName, setChoiseName] = useState("");
+  const [choiseType, setChoiseType] = useState("");
   const addToCartHandler = (product) => {
-    let productLocation = "الرياض";
-    let vendorName = "احمد";
+    let productLocation = vendor && vendor.vendorLocation;
+    let brandName = vendor && vendor.brandName;
+    let vendorName = vendor && vendor.vendorName;
 
     dispatch(
       addToCart({
-        ...product,
+        productId: product._id,
         quantity: quantity,
         productLocation,
+        brandName,
+        price: livePrice ? livePrice : product.price,
+        image: liveImg ? liveImg : product.img,
+        nameOfChoice: choiseName && choiseName,
+        typeOfChoice: choiseType && choiseType,
         vendorName,
+        name: product.name,
       })
     );
   };
@@ -344,7 +353,8 @@ function Home() {
                                       onClick={() => {
                                         handleItemClick(namechoose, _id);
                                         setLivePrice(pricechoose);
-                                        console.log(pricechoose);
+                                        setChoiseName(namechoose);
+                                        setChoiseType(typeOfChoose);
                                       }}
                                     >
                                       <span

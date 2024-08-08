@@ -8,7 +8,7 @@ const ConversationsPage = () => {
   const dispatch = useDispatch();
   const conversations = useSelector(selectConversations);
   const { isAuthenticated, userInfo } = useSelector((state) => state.auth);
-  const userData = userInfo[`Client data`][0];
+  const userData = userInfo.data;
   const userId = userData ? userData._id : null;
 
   useEffect(() => {

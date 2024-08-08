@@ -23,7 +23,7 @@ function Favorite() {
   const [currentVideo, setCurrentVideo] = useState(null);
   const videoRef = useRef(null);
   const { userInfo } = useSelector((state) => state.auth);
-  const userData = userInfo && userInfo[`Client data`][0];
+  const userData = userInfo && userInfo.data;
   const UserId = userData && userData._id;
 
   useEffect(() => {

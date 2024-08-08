@@ -7,7 +7,7 @@ const AddReply = ({ commentId, setReplyMode, product }) => {
   const [reply, setReply] = useState("");
   const dispatch = useDispatch();
   const { userInfo, isAuthenticated } = useSelector((state) => state.auth);
-  const userData = userInfo ? userInfo[`Client data`][0] : null;
+  const userData = userInfo ? userInfo.data : null;
   const user = userData ? userData._id : null;
   const productId = product._id;
   const onreplyChanged = (e) => setReply(e.target.value);

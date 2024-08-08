@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./register.css";
 import {
+  registerUser,
   sendOTP,
   setEmailRegister,
   setFirstNameRegister,
@@ -21,28 +22,41 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { phoneNumberRegister, isAuthenticated } = useSelector(
+    (state) => state.auth
+  );
+
   useEffect(() => {
     dispatch(setIsRegisterd(false));
   }, [phone]);
 
   const saudiPhoneNumberRegex = /^0[0-9]{9}$/;
-  const lastNineDigits = phone.length === 10 && phone.slice(-9);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (saudiPhoneNumberRegex.test(phone)) {
-      dispatch(sendOTP(lastNineDigits));
-      dispatch(setPhoneNumberRegister(phone));
-      dispatch(setEmailRegister(email));
-      dispatch(setFirstNameRegister(firstName));
-      dispatch(setLastNameRegister(lastName));
-      navigate("/verifySingupOtp");
+    if (saudiPhoneNumberRegex.test(phoneNumberRegister)) {
+      dispatch(
+        registerUser({
+          Email: email,
+          FirstName: firstName,
+          LastName: lastName,
+          PhoneNumber: phoneNumberRegister,
+          Password: "123",
+        })
+      );
     } else {
+      e.preventDefault();
       toast.error("ادخل رقم جوال صالح", {
         position: "top-left",
       });
     }
   };
+
+  useEffect(() => {
+    if (isAuthenticated === true) {
+      navigate("/profile");
+    }
+  }, [isAuthenticated]);
 
   return (
     <div className="register-main">
@@ -80,17 +94,6 @@ const Register = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="ادخل الايميل"
               required
-            />
-            <input
-              className="form-control"
-              type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="مثال 0512345678"
-              required
-              maxLength="10"
-              minLength="10"
-              name="phone"
             />
           </div>
           <button type="submit" className="btn btn-primary btn-block">

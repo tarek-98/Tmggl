@@ -13,7 +13,7 @@ export const fetchFavoriteProduct = createAsyncThunk(
         {
           headers: {
             Authorization: `${Authorization}`,
-            "Content-Type": "application/json",
+            // "Content-Type": "application/json",
           },
         }
       );
@@ -33,7 +33,7 @@ export const addToFavorite = createAsyncThunk(
         method: "PATCH",
         headers: {
           Authorization: `${Authorization}`,
-          "Content-Type": "application/json",
+          // "Content-Type": "application/json",
         },
       }
     )

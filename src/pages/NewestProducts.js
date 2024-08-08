@@ -44,7 +44,7 @@ function NewestProducts() {
   const [livePrice, setLivePrice] = useState(null);
   const [liveImg, setLiveImg] = useState(null);
   const { userInfo } = useSelector((state) => state.auth);
-  const userData = userInfo ? userInfo[`Client data`][0] : null;
+  const userData = userInfo ? userInfo.data : null;
   const [discount, setdiscount] = useState(false);
   const dispatch = useDispatch();
 
